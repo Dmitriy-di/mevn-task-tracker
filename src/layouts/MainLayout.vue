@@ -11,106 +11,131 @@
           @click="toggleLeftDrawer"
         />
 
-        <q-toolbar-title>
-          Quasar App
-        </q-toolbar-title>
-
-        <div>Quasar v{{ $q.version }}</div>
+        <q-toolbar-title> Quasar App </q-toolbar-title>
       </q-toolbar>
     </q-header>
 
-    <q-drawer
-      v-model="leftDrawerOpen"
-      show-if-above
-      bordered
-    >
+    <q-drawer class="q-pt-xl" v-model="leftDrawerOpen" show-if-above bordered>
       <q-list>
-        <q-item-label
-          header
-        >
-          Essential Links
-        </q-item-label>
+        <q-list bordered class="rounded-borders">
+          <q-expansion-item
+            to="/Team"
+            expand-separator
+            icon=""
+            :label="``"
+            caption=""
+            default-opened
+          >
+            <q-tabs align="left">
+              <q-route-tab to="/Executors" label="Исполнители" />
+            </q-tabs>
 
-        <EssentialLink
-          v-for="link in essentialLinks"
-          :key="link.title"
-          v-bind="link"
-        />
+            <q-tabs align="left">
+              <q-route-tab to="/Responsible" label="Ответственные" />
+            </q-tabs>
+          </q-expansion-item>
+          <q-expansion-item
+            to="/Deleted"
+            expand-separator
+            icon=""
+            :label="``"
+            caption=""
+            default-opened
+          >
+            <q-tabs align="left">
+              <q-route-tab to="/Excluded" :label="``" />
+            </q-tabs>
+          </q-expansion-item>
+          <q-expansion-item
+            to="/Modules"
+            expand-separator
+            icon=""
+            :label="'sdf'"
+            caption=""
+            default-opened
+            @click="get_module_index(-1)"
+          >
+            <q-tabs
+              indicator-color="transparent"
+              v-for="(mod, index) in MODULES"
+              :key="mod.id"
+              align="left"
+              @click="get_module_index(index)"
+            >
+              <q-route-tab to="/Modules">
+                <div>{{ mod.name }}</div>
+              </q-route-tab>
+            </q-tabs>
+          </q-expansion-item>
+
+          <q-expansion-item
+            to="/AllTasks"
+            expand-separator
+            icon=""
+            :label="''"
+            caption=""
+          >
+          </q-expansion-item>
+        </q-list>
       </q-list>
     </q-drawer>
 
     <q-page-container>
-      <router-view />
+      <router-view v-slot="{ Component }">
+        <transition name="bounce">
+          <keep-alive>
+            <component :is="Component" />
+          </keep-alive>
+        </transition>
+      </router-view>
     </q-page-container>
   </q-layout>
 </template>
 
 <script>
-import { defineComponent, ref } from 'vue'
-import EssentialLink from 'components/EssentialLink.vue'
-
-const linksList = [
-  {
-    title: 'Docs',
-    caption: 'quasar.dev',
-    icon: 'school',
-    link: 'https://quasar.dev'
-  },
-  {
-    title: 'Github',
-    caption: 'github.com/quasarframework',
-    icon: 'code',
-    link: 'https://github.com/quasarframework'
-  },
-  {
-    title: 'Discord Chat Channel',
-    caption: 'chat.quasar.dev',
-    icon: 'chat',
-    link: 'https://chat.quasar.dev'
-  },
-  {
-    title: 'Forum',
-    caption: 'forum.quasar.dev',
-    icon: 'record_voice_over',
-    link: 'https://forum.quasar.dev'
-  },
-  {
-    title: 'Twitter',
-    caption: '@quasarframework',
-    icon: 'rss_feed',
-    link: 'https://twitter.quasar.dev'
-  },
-  {
-    title: 'Facebook',
-    caption: '@QuasarFramework',
-    icon: 'public',
-    link: 'https://facebook.quasar.dev'
-  },
-  {
-    title: 'Quasar Awesome',
-    caption: 'Community Quasar projects',
-    icon: 'favorite',
-    link: 'https://awesome.quasar.dev'
-  }
-]
+import { defineComponent, ref, computed, onMounted, watch } from "vue";
+import { useStore } from "vuex";
 
 export default defineComponent({
-  name: 'MainLayout',
+  name: "MainLayout",
+  setup() {
+    const leftDrawerOpen = ref(false);
+    const store = useStore();
 
-  components: {
-    EssentialLink
-  },
+    const get_module_index = function (index) {
+      store.commit("setModuleIndex", index);
+    };
 
-  setup () {
-    const leftDrawerOpen = ref(false)
+    const MODULES = computed(() => store.getters.MODULES);
+
+    onMounted(() => {
+      store.dispatch("fetchProducts");
+      store.dispatch("fetchTasks");
+      store.dispatch("fetchGroups");
+      store.dispatch("fetchSubjects");
+    });
 
     return {
-      essentialLinks: linksList,
       leftDrawerOpen,
-      toggleLeftDrawer () {
-        leftDrawerOpen.value = !leftDrawerOpen.value
-      }
-    }
-  }
-})
+      tab: "mail",
+      get_module_index,
+      toggleLeftDrawer() {
+        leftDrawerOpen.value = !leftDrawerOpen.value;
+      },
+      MODULES,
+    };
+  },
+});
 </script>
+
+<style lang="scss">
+.q-tabs__content {
+  width: 100% !important;
+  text-align: left !important;
+}
+
+.link {
+  color: white;
+  text-decoration: none;
+}
+</style>
