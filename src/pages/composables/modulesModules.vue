@@ -1,7 +1,15 @@
 <template>
   <div>
+    <q-btn
+      :disabled="disableAddBtn"
+      class="q-mt-sm"
+      color="green"
+      @click="showForm_addModule = !showForm_addModule"
+      >Добавить модуль</q-btn
+    >
     <q-table
-      :rows="MOUDLE2"
+      v-if="!MODULES.length == 0"
+      :rows="MODULES"
       :columns="columns"
       :pagination="pagination"
       :pagination-labels="{
@@ -67,16 +75,6 @@
           </q-td>
         </q-tr>
       </template>
-
-      <template v-slot:top-left="props">
-        <q-btn
-          :disabled="disableAddBtn"
-          class="q-mt-sm"
-          color="green"
-          @click="showForm_addModule = !showForm_addModule"
-          >Добавить модуль</q-btn
-        >
-      </template>
     </q-table>
 
     <!-- <q-dialog v-model="showForm_addModule">
@@ -124,18 +122,6 @@ export default {
     const module_index = computed(() => store.getters.MODULE_INDEX);
     const current_module = reactive({});
     const propertyStatus = reactive({});
-
-    const MOUDLE2 = ref([]);
-
-    watch(MODULES, () => {
-      MOUDLE2.value = [];
-
-      MODULES.value.map((mod) => {
-        MOUDLE2.value.push(mod);
-      });
-
-      console.log(MOUDLE2.value);
-    });
 
     const pagination = reactive({
       rowsPerPage: 10,
@@ -259,7 +245,6 @@ export default {
       disableAddBtn,
       disableRedBtn,
       columns,
-      MOUDLE2,
       pagination,
       set_id(env, mod, task) {
         id.value = env.target.id;
