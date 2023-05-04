@@ -1,7 +1,7 @@
 <template>
   <div class="modules q-pa-md">
     <modulesModules v-if="showTableModules()" />
-    <!-- <modulesTasks v-else /> -->
+    <modulesTasks v-else />
   </div>
 </template>
 
@@ -9,12 +9,12 @@
 import { computed, reactive, watch, ref } from "vue";
 import { useStore } from "vuex";
 // import { useQuery } from "@vue/apollo-composable";
-// import modulesTasks from "../pages/composables/modulesTasks.vue";
+import modulesTasks from "../pages/composables/modulesTasks.vue";
 import modulesModules from "../pages/composables/modulesModules.vue";
 
 export default {
   components: {
-    //  modulesTasks,
+    modulesTasks,
     modulesModules,
   },
 
