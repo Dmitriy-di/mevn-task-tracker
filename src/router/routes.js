@@ -10,7 +10,7 @@ const routes = [
   //   ],
   // },
   {
-    path: '/app',
+    path: '/',
     component: () => import('layouts/MainLayout.vue'),
     children: [
       // { path: '', component: () => import('pages/IndexPage.vue') },
@@ -23,7 +23,7 @@ const routes = [
       //   path: '/Responsible',
       //   component: () => import('components/Responsible.vue'),
       // },
-      // { path: '/Modules', component: () => import('pages/Modules.vue') },
+      { path: '/Modules', component: () => import('pages/Modules.vue') },
       // { path: '/AllTasks', component: () => import('pages/Tasks.vue') },
       // { path: '/Excluded', component: () => import('pages/Excluded.vue') },
     ],

@@ -22,7 +22,7 @@
             to="/Team"
             expand-separator
             icon=""
-            :label="``"
+            :label="`Команда`"
             caption=""
             default-opened
           >
@@ -43,14 +43,14 @@
             default-opened
           >
             <q-tabs align="left">
-              <q-route-tab to="/Excluded" :label="``" />
+              <q-route-tab to="/Excluded" :label="`Исключённые`" />
             </q-tabs>
           </q-expansion-item>
           <q-expansion-item
             to="/Modules"
             expand-separator
             icon=""
-            :label="'sdf'"
+            :label="'Модули'"
             caption=""
             default-opened
             @click="get_module_index(-1)"
@@ -72,7 +72,7 @@
             to="/AllTasks"
             expand-separator
             icon=""
-            :label="''"
+            :label="'Все задачи'"
             caption=""
           >
           </q-expansion-item>
@@ -108,8 +108,12 @@ export default defineComponent({
 
     const MODULES = computed(() => store.getters.MODULES);
 
+    watch(MODULES, () => {
+      console.log(MODULES.value);
+    });
+
     onMounted(() => {
-      store.dispatch("fetchProducts");
+      store.dispatch("fetchModules");
       store.dispatch("fetchTasks");
       store.dispatch("fetchGroups");
       store.dispatch("fetchSubjects");

@@ -28,6 +28,7 @@ export const fetchModules = async function ({ commit }) {
   try {
     const modules = await getModules()
     commit('setModules', modules)
+    console.log('modules', modules)
   } catch (err) {
     console.log('Ошибка', err)
   }
@@ -47,6 +48,7 @@ export const fetchTasks = async function ({ commit }) {
   try {
     const tasks = await getTasks()
     commit('setTasks', tasks)
+    console.log('tasks', tasks)
   } catch (err) {
     console.log('Ошибка', err)
   }
