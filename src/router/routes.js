@@ -24,7 +24,7 @@ const routes = [
       //   component: () => import('components/Responsible.vue'),
       // },
       { path: '/Modules', component: () => import('pages/Modules.vue') },
-      // { path: '/AllTasks', component: () => import('pages/Tasks.vue') },
+      { path: '/AllTasks', component: () => import('pages/Tasks.vue') },
       // { path: '/Excluded', component: () => import('pages/Excluded.vue') },
     ],
   },

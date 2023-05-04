@@ -108,10 +108,6 @@ export default defineComponent({
 
     const MODULES = computed(() => store.getters.MODULES);
 
-    watch(MODULES, () => {
-      console.log(MODULES.value);
-    });
-
     onMounted(() => {
       store.dispatch("fetchModules");
       store.dispatch("fetchTasks");
