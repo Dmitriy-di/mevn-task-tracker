@@ -9,7 +9,10 @@ export const state = {
   tasks: '',
   groups: '',
   subjects: '',
-
+  executors: '',
+  responsible: '',
+  optionsResponsibles: '',
+  optionsExecutors: '',
   module_index: -1,
 }
 

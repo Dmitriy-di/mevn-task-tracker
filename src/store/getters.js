@@ -27,6 +27,22 @@ export const GROUPS = (state) => {
   return state.groups
 }
 
+export const EXECUTORS = (state) => {
+  return state.executors
+}
+
+export const RESPONSIBLES = (state) => {
+  return state.responsible
+}
+
+export const OPTIONS_RESPONSIBLES = (state) => {
+  return state.optionsResponsibles
+}
+
+export const OPTIONS_EXECUTORS = (state) => {
+  return state.optionsExecutors
+}
+
 //=====================
 export const MODULE_INDEX = (state) => {
   return state.module_index

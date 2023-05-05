@@ -31,9 +31,15 @@ export const setGroups = (state, groups) => {
   state.groups = groups
 }
 
-// export const setGroup = (state, products) => {
-//   state.products = products
-// }
+export const setGroupResponsibles = (state, { responsible, options }) => {
+  state.responsible = responsible
+  state.optionsResponsibles = options
+}
+
+export const setGroupExecutors = (state, { executors, options }) => {
+  state.executors = executors
+  state.optionsExecutors = options
+}
 
 //SUBJECTS
 export const setSubjects = (state, subjects) => {
