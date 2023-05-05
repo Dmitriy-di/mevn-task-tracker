@@ -1,10 +1,11 @@
 <template>
   <div>
-    <h5>Исполнители</h5>
+    <h5>Ответственные</h5>
+
     <q-table
-      v-if="!executors.length == 0"
+      v-if="!responsibles.length == 0"
       class="q-mx-lg"
-      :rows="executors"
+      :rows="responsibles"
       :columns="columns"
       :pagination="pagination"
       :pagination-labels="{
@@ -28,12 +29,14 @@
 </template>
 
 <script>
-import { defineComponent, computed, reactive } from "vue";
+import { defineComponent, computed, reactive, watch } from "vue";
 import { useStore } from "vuex";
+import { useQuasar } from "quasar";
 
 export default defineComponent({
   setup() {
     const store = useStore();
+    const $q = useQuasar();
 
     const pagination = reactive({
       rowsPerPage: 10,
@@ -48,13 +51,15 @@ export default defineComponent({
       { name: "Действия", align: "left", label: "Действия", field: "Действия" },
     ];
 
-    const executors = computed(() => store.getters.EXECUTORS);
+    const responsibles = computed(() => store.getters.RESPONSIBLES);
 
     return {
-      executors,
+      responsibles,
       columns,
       pagination,
     };
   },
 });
 </script>
+
+<style></style>

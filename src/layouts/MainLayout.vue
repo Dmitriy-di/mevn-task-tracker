@@ -33,19 +33,12 @@
             <q-tabs align="left">
               <q-route-tab to="/Responsible" label="Ответственные" />
             </q-tabs>
-          </q-expansion-item>
-          <q-expansion-item
-            to="/Deleted"
-            expand-separator
-            icon=""
-            :label="``"
-            caption=""
-            default-opened
-          >
+
             <q-tabs align="left">
               <q-route-tab to="/Excluded" :label="`Исключённые`" />
             </q-tabs>
           </q-expansion-item>
+
           <q-expansion-item
             to="/Modules"
             expand-separator
@@ -109,10 +102,11 @@ export default defineComponent({
     const MODULES = computed(() => store.getters.MODULES);
 
     onMounted(() => {
-      store.dispatch("fetchModules");
+      store.dispatch("fetchGroupResponsibles");
+      store.dispatch("fetchGroupRExecutors");
       store.dispatch("fetchTasks");
-      store.dispatch("fetchGroups");
-      store.dispatch("fetchSubjects");
+      store.dispatch("fetchModules");
+      store.dispatch("fetchGroupRExcluded");
     });
 
     return {

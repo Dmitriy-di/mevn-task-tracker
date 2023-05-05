@@ -32,7 +32,11 @@ export const EXECUTORS = (state) => {
 }
 
 export const RESPONSIBLES = (state) => {
-  return state.responsible
+  return state.responsibles
+}
+
+export const EXCLUDED = (state) => {
+  return state.excluded
 }
 
 export const OPTIONS_RESPONSIBLES = (state) => {
@@ -41,6 +45,10 @@ export const OPTIONS_RESPONSIBLES = (state) => {
 
 export const OPTIONS_EXECUTORS = (state) => {
   return state.optionsExecutors
+}
+
+export const OPTIONS_EXCLUDED = (state) => {
+  return state.optionsExcluded
 }
 
 //=====================

@@ -113,6 +113,26 @@ export const fetchGroupRExecutors = async function ({ commit }) {
   }
 }
 
+export const fetchGroupRExcluded = async function ({ commit }) {
+  try {
+    let excluded = await getGroup('6454b387b526ef56cc250483')
+    excluded = excluded.subjects
+
+    let options = []
+    for (let subject of excluded) {
+      options.push(
+        subject.fullname?.first_name + ' ' + subject.fullname?.last_name,
+      )
+    }
+
+    console.log('excLUded', excluded)
+
+    commit('setGroupExcluded', { excluded, options })
+  } catch (err) {
+    console.log('Ошибка', err)
+  }
+}
+
 //SUBJECTS
 export const fetchSubjects = async function ({ commit }) {
   try {

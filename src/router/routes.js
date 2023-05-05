@@ -19,13 +19,13 @@ const routes = [
         path: '/Executors',
         component: () => import('components/Executors.vue'),
       },
-      // {
-      //   path: '/Responsible',
-      //   component: () => import('components/Responsible.vue'),
-      // },
+      {
+        path: '/Responsible',
+        component: () => import('components/Responsible.vue'),
+      },
+      { path: '/Excluded', component: () => import('components/Excluded.vue') },
       { path: '/Modules', component: () => import('pages/Modules.vue') },
       { path: '/AllTasks', component: () => import('pages/Tasks.vue') },
-      // { path: '/Excluded', component: () => import('pages/Excluded.vue') },
     ],
   },
 

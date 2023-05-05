@@ -4,15 +4,17 @@ import * as actions from './actions'
 import * as mutations from './mutations'
 
 export const state = {
-  products: '',
-  modules: '',
-  tasks: '',
-  groups: '',
-  subjects: '',
-  executors: '',
-  responsible: '',
-  optionsResponsibles: '',
-  optionsExecutors: '',
+  products: [],
+  modules: [],
+  tasks: [],
+  groups: [],
+  subjects: [],
+  executors: [],
+  responsibles: [],
+  excluded: [],
+  optionsResponsibles: [],
+  optionsExecutors: [],
+  optionsExcluded: [],
   module_index: -1,
 }
 

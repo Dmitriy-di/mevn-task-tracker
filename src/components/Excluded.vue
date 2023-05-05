@@ -1,10 +1,10 @@
 <template>
   <div>
-    <h5>Исполнители</h5>
+    <h5>Исключенные</h5>
     <q-table
-      v-if="!executors.length == 0"
+      v-if="!excluded.length == 0"
       class="q-mx-lg"
-      :rows="executors"
+      :rows="excluded"
       :columns="columns"
       :pagination="pagination"
       :pagination-labels="{
@@ -48,10 +48,10 @@ export default defineComponent({
       { name: "Действия", align: "left", label: "Действия", field: "Действия" },
     ];
 
-    const executors = computed(() => store.getters.EXECUTORS);
+    const excluded = computed(() => store.getters.EXCLUDED);
 
     return {
-      executors,
+      excluded,
       columns,
       pagination,
     };

@@ -31,14 +31,19 @@ export const setGroups = (state, groups) => {
   state.groups = groups
 }
 
-export const setGroupResponsibles = (state, { responsible, options }) => {
-  state.responsible = responsible
+export const setGroupResponsibles = (state, { responsibles, options }) => {
+  state.responsibles = responsibles
   state.optionsResponsibles = options
 }
 
 export const setGroupExecutors = (state, { executors, options }) => {
   state.executors = executors
   state.optionsExecutors = options
+}
+
+export const setGroupExcluded = (state, { excluded, options }) => {
+  state.excluded = excluded
+  state.optionsExcluded = options
 }
 
 //SUBJECTS
