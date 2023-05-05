@@ -69,7 +69,7 @@
             <q-btn
               :disabled="disableRedBtn"
               class="btn"
-              @click="deleteModule(props.row)"
+              @click="delModule(props.row._id)"
               >Удалить</q-btn
             >
           </q-td>
@@ -80,6 +80,7 @@
     <q-dialog v-model="showForm_addModule">
       <FormAddModule />
     </q-dialog>
+
     <!-- <q-dialog v-model="showForm_updateModule">
     <FormUpdateModule :mod="currentModuleClickUp" :idUpdateModule="id" />
   </q-dialog> -->
@@ -89,10 +90,7 @@
 <script>
 import { computed, reactive, watch, ref, onMounted } from "vue";
 import { useStore } from "vuex";
-// import { GetPropertyStatus } from "src/api/main/queryes";
-// import { useQuery } from "@vue/apollo-composable";
-// import { DeleteTask, DeleteModule } from "src/api/main/mutations.js";
-// import { useMutation } from "@vue/apollo-composable";
+import { deleteModule } from "../../services/index";
 import FormAddModule from "../../components/FormAddModule.vue";
 import { useQuasar } from "quasar";
 
@@ -102,22 +100,13 @@ export default {
     //   FormUpdateModule,
   },
 
-  // OnMounted() {
-  //   if (sessionStorage.role !== "Владелец") {
-  //     this.disableAddBtn = true;
-  //     this.disableRedBtn = true;
-  //   }
-  // },
-
   setup() {
     const id = ref(0);
     const idUpdateModule = ref(0);
     const idModule = ref(0);
     const store = useStore();
-
     const showForm_addModule = ref(false);
     let showForm_updateModule = ref(false);
-
     const currentModuleClickUp = ref();
     const MODULES = computed(() => store.getters.MODULES);
     const module_index = computed(() => store.getters.MODULE_INDEX);
@@ -187,35 +176,12 @@ export default {
     const disableAddBtn = ref(false);
     const disableRedBtn = ref(false);
 
-    // onMounted(() => {
-    //   if (sessionStorage.role !== "Владелец") {
-    //     disableAddBtn.value = true;
-    //     disableRedBtn.value = true;
-    //   }
-    // });
     const $q = useQuasar();
-    // const deleteModule = async function (mod) {
-    //   try {
-    //     const apolloClient = new ApolloClient(getClientOptions());
-    //     provideApolloClient(apolloClient);
-    //     for (let task of mod.property8) {
-    //       const { mutate } = useMutation(DeleteTask, () => ({
-    //         variables: {
-    //           id: task.id,
-    //         },
-    //       }));
-    //       await mutate();
-    //     }
-    //     const { mutate } = useMutation(DeleteModule, () => ({
-    //       variables: {
-    //         id: mod.id,
-    //       },
-    //     }));
-    //     mutate();
-    //   } catch (err) {
-    //     console.log("Ошибка", err);
-    //   }
-    // };
+
+    const delModule = async (id) => {
+      await deleteModule(id);
+      store.dispatch("fetchModules");
+    };
 
     const get_module = function (module_index) {
       current_module.values = MODULES.value[module_index.value];
@@ -234,14 +200,15 @@ export default {
 
     return {
       current_module,
-      // deleteModule,
       propertyStatus,
       currentModuleClickUp,
       id,
+      deleteModule,
       idModule,
       idUpdateModule,
       showForm_updateModule,
       showForm_addModule,
+      delModule,
       MODULES,
       disableAddBtn,
       disableRedBtn,
