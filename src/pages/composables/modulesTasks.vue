@@ -72,19 +72,16 @@
     <q-btn
       class="q-mt-sm"
       color="green"
-      @click="
-        showForm_addTask = !showForm_addTask;
-        set_id_module(module_index);
-      "
+      @click="showForm_addTask = !showForm_addTask"
       >Добавить задачу</q-btn
     >
     <div v-if="MODULES[module_index].tasks.length == 0">Список задач пуст</div>
 
-    <!-- <q-dialog v-model="showForm_addTask">
-      <FormAddTask :idModule="idModule" />
+    <q-dialog v-model="showForm_addTask">
+      <FormAddTask :idModule="MODULES[module_index]._id" />
     </q-dialog>
 
-    <q-dialog v-model="showForm_updateTask">
+    <!-- <q-dialog v-model="showForm_updateTask">
       <FormUpdateTask :task="currentTaskClickUp" :id="id" />
     </q-dialog>
 
@@ -97,7 +94,7 @@
 <script>
 import { computed, ref, reactive } from "vue";
 import { useStore } from "vuex";
-// import FormAddTask from "components/FormAddTask.vue";
+import FormAddTask from "components/FormAddTask.vue";
 // import FormUpdateTask from "components/FormUpdateTask.vue";
 // import FormFiles from "components/Files.vue";
 // import { DeleteTask } from "src/api/main/mutations.js";
@@ -107,7 +104,7 @@ import { useQuasar } from "quasar";
 
 export default {
   components: {
-    //  FormAddTask,
+    FormAddTask,
     //  FormUpdateTask,
     //  FormFiles,
   },
@@ -115,7 +112,6 @@ export default {
   setup() {
     const id = ref(0);
     const idUpdateModule = ref(0);
-    const idModule = ref(0);
     const store = useStore();
     const showForm_addTask = ref(false);
     const showForm_updateTask = ref(false);
@@ -162,15 +158,11 @@ export default {
       showForm_filesForm,
       // deleteTask,
       id,
-      idModule,
       idUpdateModule,
       currentTaskClickUp,
       MODULES,
       columns,
       pagination,
-      set_id_module(id) {
-        idModule.value = id;
-      },
       set_id(env, task) {
         id.value = env.target.id;
         idUpdateModule.value = env.target.id;
