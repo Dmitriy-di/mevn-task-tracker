@@ -15,7 +15,7 @@
     >
       <template v-slot:body="props">
         <q-tr :props="props">
-          <q-td>{{ props.row.email.email }}</q-td>
+          <q-td>{{ props.row.email }}</q-td>
           <q-td>{{ props.row.fullname.first_name }}</q-td>
           <q-td>{{ props.row.fullname.last_name }}</q-td>
           <button class="btn" @click="deleteSubject(props.row.id)">
@@ -34,7 +34,7 @@ import { useStore } from "vuex";
 export default defineComponent({
   setup() {
     const store = useStore();
-    store.dispatch("fetchGroupResponsibles");
+    store.dispatch("fetchGroupRExecutors");
     const pagination = reactive({
       rowsPerPage: 10,
       page: 1,

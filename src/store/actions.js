@@ -75,7 +75,8 @@ export const fetchGroups = async function ({ commit }) {
 
 export const fetchGroupResponsibles = async function ({ commit }) {
   try {
-    const responsibles = await getSubjects('6454a1b713681c3e308f8e6f')
+    let responsibles = await getGroup('6454a1b713681c3e308f8e6f')
+    responsibles = responsibles.subjects
 
     let options = []
     for (let subject of responsibles) {
@@ -83,6 +84,8 @@ export const fetchGroupResponsibles = async function ({ commit }) {
         subject.fullname?.first_name + ' ' + subject.fullname?.last_name,
       )
     }
+
+    console.log('responsibles', responsibles)
 
     commit('setGroupResponsibles', { responsibles, options })
   } catch (err) {
@@ -92,7 +95,8 @@ export const fetchGroupResponsibles = async function ({ commit }) {
 
 export const fetchGroupRExecutors = async function ({ commit }) {
   try {
-    const executors = await getSubjects('6454a1cf13681c3e308f8e70')
+    let executors = await getGroup('6454a1cf13681c3e308f8e70')
+    executors = executors.subjects
 
     let options = []
     for (let subject of executors) {
@@ -100,6 +104,8 @@ export const fetchGroupRExecutors = async function ({ commit }) {
         subject.fullname?.first_name + ' ' + subject.fullname?.last_name,
       )
     }
+
+    console.log('executors', executors)
 
     commit('setGroupExecutors', { executors, options })
   } catch (err) {
