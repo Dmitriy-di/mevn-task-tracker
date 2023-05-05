@@ -56,9 +56,7 @@
             >
               Редактировать
             </button>
-            <button class="btn" @click="deleteTask(props.row.id)">
-              Удалить
-            </button>
+            <button class="btn" @click="delTask(props.row._id)">Удалить</button>
             <button
               class="btn"
               @click="showForm_filesForm = !showForm_filesForm"
@@ -95,12 +93,8 @@
 import { computed, ref, reactive } from "vue";
 import { useStore } from "vuex";
 import FormAddTask from "components/FormAddTask.vue";
-// import FormUpdateTask from "components/FormUpdateTask.vue";
-// import FormFiles from "components/Files.vue";
-// import { DeleteTask } from "src/api/main/mutations.js";
-// import { useMutation } from "@vue/apollo-composable";
+import { deleteTask } from "../../services/index";
 import { useQuasar } from "quasar";
-// import { response } from "../../functions/functions";
 
 export default {
   components: {
@@ -140,23 +134,18 @@ export default {
       { name: "Действия", align: "left", label: "Действия", field: "Действия" },
     ];
 
-    //  const deleteTask = function (id) {
-    //    const apolloClient = new ApolloClient(getClientOptions());
-    //    provideApolloClient(apolloClient);
-    //    const { mutate } = useMutation(DeleteTask, () => ({
-    //      variables: {
-    //        id: id,
-    //      },
-    //    }));
-    //    response("Задача удалена", "Ошибка", mutate, $q);
-    //  };
+    const delTask = async (id) => {
+      await deleteTask(id);
+      store.dispatch("fetchTasks");
+      store.dispatch("fetchModules");
+    };
 
     return {
       showForm_addTask,
       showForm_updateTask,
       module_index,
       showForm_filesForm,
-      // deleteTask,
+      delTask,
       id,
       idUpdateModule,
       currentTaskClickUp,
