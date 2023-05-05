@@ -162,15 +162,13 @@ export default defineComponent({
     });
 
     const createNewModule = async () => {
-      let data = {
+      await createModule({
         name: form.value.name,
         description: form.value.description,
         dateTimeStart: form.value.dateStart,
         dateTimeEnd: form.value.dateEnd,
         responsible: RESPONSIBLES.value[indexResponsible.value]._id,
-      };
-
-      await createModule(data);
+      });
       store.dispatch("fetchModules");
     };
 

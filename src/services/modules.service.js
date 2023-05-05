@@ -4,8 +4,7 @@ const getModule = (id) => request({ url: `modules/${id}`, method: 'get' })
 
 const getModules = () => request({ url: `modules`, method: 'get' })
 
-const createModule = (data) =>
-  request({ url: `modules`, data: data, method: 'post' })
+const createModule = (data) => request({ url: `modules`, data, method: 'post' })
 
 const deleteModule = (id) => request({ url: `modules/${id}`, method: 'delete' })
 

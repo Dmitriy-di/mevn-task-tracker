@@ -4,9 +4,12 @@ const getTask = (id) => request({ url: `tasks/${id}`, method: 'get' })
 
 const getTasks = () => request({ url: `tasks`, method: 'get' })
 
-const createTask = (data) =>
-  request({ url: `tasks`, data: data, method: 'post' })
+const createTask = (data) => request({ url: `tasks`, data, method: 'post' })
 
 const deleteTask = (id) => request({ url: `tasks/${id}`, method: 'delete' })
 
-export { getTask, getTasks, createTask, deleteTask }
+const updateTask = (id, data) => {
+  request({ url: `tasks/${id}`, method: 'put', data })
+}
+
+export { getTask, getTasks, createTask, deleteTask, updateTask }

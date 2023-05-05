@@ -79,11 +79,11 @@
       <FormAddTask :idModule="MODULES[module_index]._id" />
     </q-dialog>
 
-    <!-- <q-dialog v-model="showForm_updateTask">
+    <q-dialog v-model="showForm_updateTask">
       <FormUpdateTask :task="currentTaskClickUp" :id="id" />
     </q-dialog>
 
-    <q-dialog v-model="showForm_filesForm">
+    <!-- <q-dialog v-model="showForm_filesForm">
       <FormFiles />
     </q-dialog> -->
   </div>
@@ -95,11 +95,12 @@ import { useStore } from "vuex";
 import FormAddTask from "components/FormAddTask.vue";
 import { deleteTask } from "../../services/index";
 import { useQuasar } from "quasar";
+import FormUpdateTask from "../../components/FormUpdateTask.vue";
 
 export default {
   components: {
     FormAddTask,
-    //  FormUpdateTask,
+    FormUpdateTask,
     //  FormFiles,
   },
 
@@ -153,6 +154,7 @@ export default {
       columns,
       pagination,
       set_id(env, task) {
+        console.log(task);
         id.value = env.target.id;
         idUpdateModule.value = env.target.id;
         currentTaskClickUp.value = task;
