@@ -77,10 +77,10 @@
       </template>
     </q-table>
 
-    <!-- <q-dialog v-model="showForm_addModule">
-    <FormAddModule />
-  </q-dialog>
-  <q-dialog v-model="showForm_updateModule">
+    <q-dialog v-model="showForm_addModule">
+      <FormAddModule />
+    </q-dialog>
+    <!-- <q-dialog v-model="showForm_updateModule">
     <FormUpdateModule :mod="currentModuleClickUp" :idUpdateModule="id" />
   </q-dialog> -->
   </div>
@@ -93,13 +93,14 @@ import { useStore } from "vuex";
 // import { useQuery } from "@vue/apollo-composable";
 // import { DeleteTask, DeleteModule } from "src/api/main/mutations.js";
 // import { useMutation } from "@vue/apollo-composable";
+import FormAddModule from "../../components/FormAddModule.vue";
 import { useQuasar } from "quasar";
 
 export default {
-  // components: {
-  //   FormAddModule,
-  //   FormUpdateModule,
-  // },
+  components: {
+    FormAddModule,
+    //   FormUpdateModule,
+  },
 
   // OnMounted() {
   //   if (sessionStorage.role !== "Владелец") {
