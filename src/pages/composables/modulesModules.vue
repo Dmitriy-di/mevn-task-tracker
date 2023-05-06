@@ -60,7 +60,7 @@
           <q-td>
             <q-btn
               :disabled="disableRedBtn"
-              @click.self="set_id($event, props.row, task)"
+              @click.self="set_id(props.row)"
               class="q-mr-sm btn"
               :id="props.row.id"
             >
@@ -81,9 +81,9 @@
       <FormAddModule />
     </q-dialog>
 
-    <!-- <q-dialog v-model="showForm_updateModule">
-    <FormUpdateModule :mod="currentModuleClickUp" :idUpdateModule="id" />
-  </q-dialog> -->
+    <q-dialog v-model="showForm_updateModule">
+      <FormUpdateModule :mod="currentModuleClickUp" :idUpdateModule="id" />
+    </q-dialog>
   </div>
 </template>
 
@@ -92,17 +92,17 @@ import { computed, reactive, watch, ref, onMounted } from "vue";
 import { useStore } from "vuex";
 import { deleteModule } from "../../services/index";
 import FormAddModule from "../../components/FormAddModule.vue";
+import FormUpdateModule from "../../components/FormUpdateModule.vue";
 import { useQuasar } from "quasar";
 
 export default {
   components: {
     FormAddModule,
-    //   FormUpdateModule,
+    FormUpdateModule,
   },
 
   setup() {
     const id = ref(0);
-    const idUpdateModule = ref(0);
     const idModule = ref(0);
     const store = useStore();
     const showForm_addModule = ref(false);
@@ -205,7 +205,6 @@ export default {
       id,
       deleteModule,
       idModule,
-      idUpdateModule,
       showForm_updateModule,
       showForm_addModule,
       delModule,
@@ -214,9 +213,8 @@ export default {
       disableRedBtn,
       columns,
       pagination,
-      set_id(env, mod, task) {
-        id.value = env.target.id;
-        idUpdateModule.value = env.target.id;
+      set_id(mod) {
+        id.value = mod._id;
         currentModuleClickUp.value = mod;
         showForm_updateModule.value = !showForm_updateModule.value;
       },

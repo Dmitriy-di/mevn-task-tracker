@@ -8,4 +8,8 @@ const createModule = (data) => request({ url: `modules`, data, method: 'post' })
 
 const deleteModule = (id) => request({ url: `modules/${id}`, method: 'delete' })
 
-export { getModule, getModules, createModule, deleteModule }
+const updateModule = (id, data) => {
+  request({ url: `modules/${id}`, method: 'put', data })
+}
+
+export { getModule, getModules, createModule, deleteModule, updateModule }

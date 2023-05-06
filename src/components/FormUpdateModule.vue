@@ -1,25 +1,16 @@
 <template>
   <div class="wrapper">
     <section class="get-in-touch">
-      <h3 class="title">Новый модуль</h3>
-      <form
-        class="contact-form flex flex-center row"
-        @submit.prevent="createNewModule"
+      <h3 class="title">Редактирование модуля</h3>
+      <q-form
+        class="contact-form row flex-center"
+        @submit.prevent="upModule($event)"
       >
         <q-input
           outlined
           v-model="form.name"
           label="Название"
           class="col-11 q-mb-sm"
-          required
-        />
-
-        <q-input
-          outlined
-          v-model="form.description"
-          label="Описание"
-          class="col-11 q-mb-sm"
-          required
         />
 
         <q-input
@@ -123,15 +114,10 @@
         />
 
         <div class="form-field col-lg-12 justify-between flex">
-          <q-btn
-            color="primary"
-            label="Создать"
-            type="submit"
-            class="submit-btn"
-          />
+          <q-btn type="submit" color="green" label="Обновить" />
           <q-btn color="primary" label="Отменить" v-close-popup />
         </div>
-      </form>
+      </q-form>
     </section>
   </div>
 </template>
@@ -140,51 +126,59 @@
 import { defineComponent, ref, computed, watch } from "vue";
 import { useQuasar } from "quasar";
 import { useStore } from "vuex";
-import { createModule } from "../services/index";
+import { updateModule } from "../services/index";
 
 export default defineComponent({
-  components: {},
-  setup() {
+  props: {
+    idUpdateModule: String,
+    mod: Object,
+  },
+
+  setup(props) {
     const $q = useQuasar();
     const store = useStore();
     const model = ref(null);
     const indexResponsible = ref(0);
-    const name = ref("");
-    const RESPONSIBLES = computed(() => store.getters.RESPONSIBLES);
-    const options = computed(() => store.getters.OPTIONS_RESPONSIBLES);
 
     const form = ref({
-      name: "",
-      description: "",
-      dateStart: "2019-02-01 12:44",
-      dateEnd: "2019-02-01 12:44",
-      responsible: "",
+      name: props.mod.name,
+      dateStart: props.mod.dateTimeStart,
+      dateEnd: props.mod.dateTimeEnd,
     });
 
-    const createNewModule = async () => {
-      await createModule({
-        name: form.value.name,
-        description: form.value.description,
-        dateTimeStart: form.value.dateStart,
-        dateTimeEnd: form.value.dateEnd,
-        responsible: RESPONSIBLES.value[indexResponsible.value]._id,
-      });
-      store.dispatch("fetchModules");
-    };
+    model.value =
+      props.mod.responsible?.fullname.first_name +
+      " " +
+      props.mod.responsible?.fullname.last_name;
+
+    const options = computed(() => store.getters.OPTIONS_RESPONSIBLES);
+    indexResponsible.value = options.value.indexOf(model.value);
+    const responsible = computed(() => store.getters.RESPONSIBLES);
 
     watch(model, () => {
       indexResponsible.value = options.value.indexOf(model.value);
     });
 
+    const upModule = async () => {
+      let data = {
+        name: form.value.name,
+        dateTimeStart: form.value.dateStart,
+        dateTimeEnd: form.value.dateEnd,
+        responsible: responsible.value[indexResponsible.value]._id,
+      };
+
+      await updateModule(props.idUpdateModule, data);
+      store.dispatch("fetchModules");
+      store.dispatch("fetchTasks");
+    };
+
     return {
-      createNewModule,
+      upModule,
       options,
       model,
-      name,
       form,
     };
   },
 });
 </script>
-
 <style></style>
