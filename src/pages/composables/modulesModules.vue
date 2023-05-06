@@ -90,7 +90,7 @@
 <script>
 import { computed, reactive, watch, ref, onMounted } from "vue";
 import { useStore } from "vuex";
-import { deleteModule } from "../../services/index";
+import { deleteModule, deleteTask } from "../../services/index";
 import FormAddModule from "../../components/FormAddModule.vue";
 import FormUpdateModule from "../../components/FormUpdateModule.vue";
 import { useQuasar } from "quasar";
@@ -181,6 +181,7 @@ export default {
     const delModule = async (id) => {
       await deleteModule(id);
       store.dispatch("fetchModules");
+      store.dispatch("fetchTasks");
     };
 
     const get_module = function (module_index) {
