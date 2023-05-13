@@ -88,9 +88,15 @@
 <script>
 import { defineComponent, ref, computed, onMounted, watch } from "vue";
 import { useStore } from "vuex";
+// import QtabsDocument from "../components/QtabsDocument.vue";
 
 export default defineComponent({
   name: "MainLayout",
+
+  components: {
+    // QtabsDocument,
+  },
+
   setup() {
     const leftDrawerOpen = ref(false);
     const store = useStore();
