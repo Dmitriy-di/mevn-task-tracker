@@ -1,3 +1,5 @@
+import axios from 'axios'
+
 const getFileById = (id, preview = '') => {
   axios
     .get(`http://localhost:3000/api/v1/files/${id}/${preview}`)
@@ -32,7 +34,7 @@ const uploadFile = (file, idSubject) => {
     .post('http://localhost:3000/api/v1/files', formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
-        userId: idSubject,
+        taskId: idTask,
       },
     })
     .then((response) => {
@@ -54,11 +56,17 @@ const deleteFileById = (id) => {
     })
 }
 
-const filesApi = {
-  getFiles,
-  getFileById,
-  uploadFile,
-  deleteFileById,
+const getPreviewFile = (id) => {
+  axios
+    .get(`http://localhost:3000/api/v1/files/${id}/preview`)
+    .then((response) => {
+      // Обработка успешного ответа
+      console.log(response.data) // Здесь вы можете использовать полученные файлы
+    })
+    .catch((error) => {
+      // Обработка ошибки
+      console.error(error)
+    })
 }
 
-export { filesApi }
+export { getFiles, getFileById, uploadFile, deleteFileById, getPreviewFile }

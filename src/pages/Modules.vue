@@ -129,7 +129,7 @@ export default {
     const getFileById = () => {
       axios
         .get(
-          "http://localhost:3000/api/v1/files/645e8579ee7a81f4c8a9695c/preview"
+          "http://localhost:3000/api/v1/files/645f9468e597d2cb24392c7d/preview"
         )
         .then((response) => {
           // Обработка успешного ответа

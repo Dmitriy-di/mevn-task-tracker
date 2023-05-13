@@ -155,7 +155,6 @@ export default {
       columns,
       pagination,
       set_id(env, task) {
-        console.log(task);
         id.value = env.target.id;
         idUpdateModule.value = env.target.id;
         currentTaskClickUp.value = task;

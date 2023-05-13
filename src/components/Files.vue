@@ -16,7 +16,9 @@
       @click="uploadHandler"
       >Загрузить</q-btn
     >
-    <q-btn class="btn">Смотреть</q-btn>
+    <q-btn @click="showForm_files = !showForm_files" class="btn"
+      >Смотреть</q-btn
+    >
 
     <div class="preview">
       <div
@@ -33,21 +35,34 @@
         </div>
       </div>
     </div>
+
+    <q-dialog v-model="showForm_files">
+      <taskFiles />
+    </q-dialog>
   </div>
 </template>
 
 <script>
 import { defineComponent, ref } from "vue";
 import axios from "axios";
+import taskFiles from "./TaskFiles.vue";
 
 export default defineComponent({
-  components: {},
+  components: {
+    taskFiles,
+  },
 
-  setup() {
+  props: {
+    files: Array,
+  },
+
+  setup(props) {
+    console.log(props.files);
     const submitBtn = ref(null);
     let toggleloadBtn = ref(true);
     const sourcesImg = ref([]);
     const files = ref();
+    let showForm_files = ref(false);
 
     const upload = (uploadedFiles) => {
       const file = uploadedFiles[0];
@@ -61,7 +76,7 @@ export default defineComponent({
         .post("http://localhost:3000/api/v1/files", formData, {
           headers: {
             "Content-Type": "multipart/form-data",
-            userId: "6454a20a13681c3e308f8e71",
+            taskId: "645d58b72e4d75a0fcf7d656",
           },
         })
         .then((response) => {
@@ -159,6 +174,7 @@ export default defineComponent({
       toggleloadBtn,
       files,
       sourcesImg,
+      showForm_files,
       bytesToSize,
     };
   },
