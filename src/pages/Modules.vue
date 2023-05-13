@@ -96,24 +96,14 @@ export default {
       const file = event.target.files[0];
       console.log(file);
 
-      const author = {
-        name: "John Doe",
-        email: "johndoe@example.com",
-        // Другие поля пользователя
-      };
-
       const formData = new FormData();
       formData.append("file", file);
-      formData.append("author", JSON.stringify(author));
-
-      console.log(formData.has("author")); // Выведет true, если поле присутствует
-      console.log(formData.get("author"));
 
       axios
-
         .post("http://localhost:3000/api/v1/files", formData, {
           headers: {
             "Content-Type": "multipart/form-data",
+            userId: "CAAAAAAAAAAAAAL",
           },
         })
         .then((response) => {
