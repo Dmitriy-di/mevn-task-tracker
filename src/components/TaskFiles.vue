@@ -21,6 +21,13 @@
               icon="visibility"
               @click="showImage(props.row)"
             />
+            <q-btn
+              color="primary"
+              flat
+              dense
+              icon="delete"
+              @click="deleteFileF(props.row)"
+            />
           </q-td>
         </q-tr>
       </template>
@@ -33,8 +40,14 @@
 </template>
 
 <script>
-import { defineComponent, ref } from "vue";
-import { getPreviewFile, bytesToSize } from "../sdk/file";
+import { defineComponent, ref, watch } from "vue";
+import {
+  bytesToSize,
+  getPreviewFile,
+  deleteFile,
+} from "../services/files.service";
+import { useStore } from "vuex";
+import { deleteFileObj } from "../services/filesObj.service";
 
 export default defineComponent({
   props: {
@@ -42,10 +55,11 @@ export default defineComponent({
   },
 
   setup(props) {
-    const files = ref(props.files);
+    const files = ref();
     const selectedFile = ref(null);
-    console.log(666, props.files);
-    // Колонки таблицы
+    const store = useStore();
+    files.value = props.files;
+
     const columns = [
       {
         name: "name",
@@ -71,9 +85,15 @@ export default defineComponent({
       },
     ];
 
-    // Показать превью файла
     const showImage = async (file) => {
       selectedFile.value = await getPreviewFile(file.idFile);
+    };
+
+    const deleteFileF = async (file) => {
+      console.log(file);
+      await deleteFileObj(file._id);
+      await deleteFile(file.idFile);
+      store.dispatch("fetchModules");
     };
 
     return {
@@ -81,11 +101,10 @@ export default defineComponent({
       selectedFile,
       columns,
       showImage,
+      deleteFileF,
     };
   },
 });
 </script>
 
-<style>
-/* Добавьте свои стили здесь */
-</style>
+<style></style>

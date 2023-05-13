@@ -43,11 +43,10 @@
 </template>
 
 <script>
-import { defineComponent, ref } from "vue";
-import axios from "axios";
+import { defineComponent, ref, watch } from "vue";
 import taskFiles from "./TaskFiles.vue";
-import { bytesToSize, uploadFile } from "../sdk/file";
 import { useStore } from "vuex";
+import { uploadFile, bytesToSize } from "../services/files.service";
 
 export default defineComponent({
   components: {
@@ -70,29 +69,6 @@ export default defineComponent({
 
     propsTask = props.task;
     propsFiles.value = props.task.files;
-
-    // const upload = (uploadedFiles) => {
-    //   const file = uploadedFiles[0];
-
-    //   console.log(file);
-
-    //   const formData = new FormData();
-    //   formData.append("file", file);
-
-    //   axios
-    //     .post("http://localhost:3000/api/v1/files", formData, {
-    //       headers: {
-    //         "Content-Type": "multipart/form-data",
-    //         taskId: "645d58b72e4d75a0fcf7d656",
-    //       },
-    //     })
-    //     .then((response) => {
-    //       console.log("File uploaded successfully");
-    //     })
-    //     .catch((error) => {
-    //       console.error("Error uploading file:", error);
-    //     });
-    // };
 
     const uploadHandler = async () => {
       await uploadFile(files.value[0], propsTask._id);

@@ -85,7 +85,7 @@
 </template>
 
 <script>
-import { computed, ref, reactive } from "vue";
+import { computed, ref, reactive, watch } from "vue";
 import { useStore } from "vuex";
 import FormAddTask from "components/FormAddTask.vue";
 import { deleteTask } from "../../services/index";
@@ -111,6 +111,12 @@ export default {
     const $q = useQuasar();
     const MODULES = computed(() => store.getters.MODULES);
     const module_index = computed(() => store.getters.MODULE_INDEX);
+
+    // watch(MODULES, () => {
+    //   currentTaskClickUp.value = MODULES.value.filter(
+    //     (a) => a.tasks._id == currentTaskClickUp.value._id
+    //   );
+    // });
 
     const pagination = reactive({
       rowsPerPage: 10,

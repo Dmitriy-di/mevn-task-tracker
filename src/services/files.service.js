@@ -1,4 +1,5 @@
 import { request } from './generic.service'
+import axios from 'axios'
 
 const getFile = (id) => request({ url: `files/${id}`, method: 'get' })
 
@@ -26,9 +27,30 @@ const uploadFile = (file, taskId) => {
 
 const deleteFile = (id) => request({ url: `files/${id}`, method: 'delete' })
 
-export const request = async ({ url, method, data = {} }) => {
-  const response = await axios[method](`${API_URL}/${url}`, data)
-  return response.data
+const bytesToSize = function (bytes) {
+  const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB']
+  if (!bytes) {
+    return '0 Byte'
+  }
+  const i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)))
+  return Math.round(bytes / Math.pow(1024, i)) + ' ' + sizes[i]
 }
 
-export { getFile, getFiles, uploadFile, deleteFile }
+const getPreviewFile = async (id) => {
+  return await axios
+    .get(`http://localhost:3000/api/v1/files/${id}/preview`)
+    .then((response) => {
+      return response.data
+    })
+    .catch((error) => {
+      console.error(error)
+    })
+}
+export {
+  getFile,
+  getFiles,
+  uploadFile,
+  deleteFile,
+  bytesToSize,
+  getPreviewFile,
+}

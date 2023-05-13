@@ -15,4 +15,4 @@ const updateFileObj = (id, data) => {
   request({ url: `filesObj/${id}`, method: 'put', data })
 }
 
-export { getFileObj, getFilesObj, createFileObj, deleteFileObj, updateFileObj }
+export { getFileObj, getFilesObj, deleteFileObj, updateFileObj }
