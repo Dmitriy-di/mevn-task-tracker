@@ -57,12 +57,7 @@
               Редактировать
             </button>
             <button class="btn" @click="delTask(props.row._id)">Удалить</button>
-            <button
-              class="btn"
-              @click="showForm_filesForm = !showForm_filesForm"
-            >
-              Файлы
-            </button>
+            <button class="btn" @click.self="set_id2(props.row)">Файлы</button>
           </q-td>
         </q-tr>
       </template>
@@ -84,7 +79,7 @@
     </q-dialog>
 
     <q-dialog v-model="showForm_filesForm">
-      <FormFiles />
+      <FormFiles :task="currentTaskClickUp" />
     </q-dialog>
   </div>
 </template>
@@ -159,6 +154,10 @@ export default {
         idUpdateModule.value = env.target.id;
         currentTaskClickUp.value = task;
         showForm_updateTask.value = !showForm_updateTask.value;
+      },
+      set_id2(task) {
+        showForm_filesForm.value = !showForm_filesForm.value;
+        currentTaskClickUp.value = task;
       },
     };
   },

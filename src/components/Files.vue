@@ -37,7 +37,7 @@
     </div>
 
     <q-dialog v-model="showForm_files">
-      <taskFiles />
+      <taskFiles :files="propsFiles" />
     </q-dialog>
   </div>
 </template>
@@ -46,6 +46,8 @@
 import { defineComponent, ref } from "vue";
 import axios from "axios";
 import taskFiles from "./TaskFiles.vue";
+import { bytesToSize, uploadFile } from "../sdk/file";
+import { useStore } from "vuex";
 
 export default defineComponent({
   components: {
@@ -53,42 +55,48 @@ export default defineComponent({
   },
 
   props: {
-    files: Array,
+    task: Object,
   },
 
   setup(props) {
-    console.log(props.files);
+    const propsFiles = ref();
     const submitBtn = ref(null);
     let toggleloadBtn = ref(true);
     const sourcesImg = ref([]);
     const files = ref();
     let showForm_files = ref(false);
+    let propsTask = ref();
+    const store = useStore();
 
-    const upload = (uploadedFiles) => {
-      const file = uploadedFiles[0];
+    propsTask = props.task;
+    propsFiles.value = props.task.files;
 
-      console.log(file);
+    // const upload = (uploadedFiles) => {
+    //   const file = uploadedFiles[0];
 
-      const formData = new FormData();
-      formData.append("file", file);
+    //   console.log(file);
 
-      axios
-        .post("http://localhost:3000/api/v1/files", formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            taskId: "645d58b72e4d75a0fcf7d656",
-          },
-        })
-        .then((response) => {
-          console.log("File uploaded successfully");
-        })
-        .catch((error) => {
-          console.error("Error uploading file:", error);
-        });
-    };
+    //   const formData = new FormData();
+    //   formData.append("file", file);
 
-    const uploadHandler = () => {
-      upload(files.value);
+    //   axios
+    //     .post("http://localhost:3000/api/v1/files", formData, {
+    //       headers: {
+    //         "Content-Type": "multipart/form-data",
+    //         taskId: "645d58b72e4d75a0fcf7d656",
+    //       },
+    //     })
+    //     .then((response) => {
+    //       console.log("File uploaded successfully");
+    //     })
+    //     .catch((error) => {
+    //       console.error("Error uploading file:", error);
+    //     });
+    // };
+
+    const uploadHandler = async () => {
+      await uploadFile(files.value[0], propsTask._id);
+      store.dispatch("fetchModules");
     };
     const triggerInput = () => {
       submitBtn.value.click();
@@ -106,22 +114,6 @@ export default defineComponent({
       if (!files.value.length) {
         toggleloadBtn.value = true;
       }
-
-      // const block = preview
-      //   .querySelector(`[data-name="${name}"]`)
-      //   .closest('.preview-image')
-
-      // block.classList.add('removing')
-      // setTimeout(() => block.remove(), 300)
-    };
-
-    const bytesToSize = function (bytes) {
-      const sizes = ["Bytes", "KB", "MB", "GB", "TB"];
-      if (!bytes) {
-        return "0 Byte";
-      }
-      const i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
-      return Math.round(bytes / Math.pow(1024, i)) + " " + sizes[i];
     };
 
     const changeHandler = (event) => {
@@ -146,19 +138,6 @@ export default defineComponent({
         reader.onload = (ev) => {
           const src = ev.target.result;
           sourcesImg.value.push(src);
-          //   preview.insertAdjacentHTML(
-          //     "afterbegin",
-          //     `
-          //   <div class="preview-image">
-          //     <div class="preview-remove" data-name="${file.name}">&times;</div>
-          //     <img src="${src}" alt="${file.name}" />
-          //     <div class="preview-info">
-          //       <span>${file.name}</span>
-          //       ${bytesToSize(file.size)}
-          //     </div>
-          //   </div>
-          // `
-          //   );
         };
 
         reader.readAsDataURL(file);
@@ -176,6 +155,8 @@ export default defineComponent({
       sourcesImg,
       showForm_files,
       bytesToSize,
+      propsFiles,
+      propsTask,
     };
   },
 });

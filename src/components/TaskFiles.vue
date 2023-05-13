@@ -1,52 +1,91 @@
 <template>
   <div>
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Size</th>
-          <th>Preview</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="file in files" :key="file.id">
-          <td>{{ file.name }}</td>
-          <td>{{ file.size }}</td>
-          <td>
-            <button @click="showImage(file)">Show Preview</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <q-table :rows="files" :columns="columns" row-key="id" class="q-mt-md">
+      <template v-slot:header="props">
+        <q-tr :props="props">
+          <q-th v-for="col in props.cols" :key="col.name">
+            {{ col.label }}
+          </q-th>
+        </q-tr>
+      </template>
+      <template v-slot:body="props">
+        <q-tr :props="props">
+          <q-td v-for="col in props.cols" :key="col.name">
+            {{ props.row[col.name] }}
+          </q-td>
+          <q-td>
+            <q-btn
+              color="primary"
+              flat
+              dense
+              icon="visibility"
+              @click="showImage(props.row)"
+            />
+          </q-td>
+        </q-tr>
+      </template>
+    </q-table>
 
     <div v-if="selectedFile">
-      <img :src="selectedFile.previewUrl" alt="Preview" />
+      <q-img :src="selectedFile" alt="Preview" class="q-mt-md" />
     </div>
   </div>
 </template>
 
-<script setup>
-import { ref } from "vue";
-import axios from "axios";
-import { getPreviewFile } from "../sdk/file";
+<script>
+import { defineComponent, ref } from "vue";
+import { getPreviewFile, bytesToSize } from "../sdk/file";
 
-const files = ref([]);
-const selectedFile = ref(null);
+export default defineComponent({
+  props: {
+    files: Array,
+  },
 
-// Загрузка списка файлов
+  setup(props) {
+    const files = ref(props.files);
+    const selectedFile = ref(null);
+    console.log(666, props.files);
+    // Колонки таблицы
+    const columns = [
+      {
+        name: "name",
+        required: true,
+        label: "Название",
+        align: "left",
+        field: "name",
+      },
+      {
+        name: "size",
+        required: true,
+        label: "Размер",
+        align: "left",
+        field: "size",
+        format: (val) => bytesToSize(Number(val)),
+      },
+      {
+        name: "uploadDate",
+        required: true,
+        label: "Дата создания",
+        align: "left",
+        field: "uploadDate",
+      },
+    ];
 
-files.value = getPreviewFile("645f9468e597d2cb24392c7d");
-axios
-  .get("/api/files")
-  .then((response) => {
-    files.value = response.data;
-  })
-  .catch((error) => {
-    console.error("Error fetching files:", error);
-  });
+    // Показать превью файла
+    const showImage = async (file) => {
+      selectedFile.value = await getPreviewFile(file.idFile);
+    };
 
-// Показать превью файла
-const showImage = (file) => {
-  selectedFile.value = file;
-};
+    return {
+      files,
+      selectedFile,
+      columns,
+      showImage,
+    };
+  },
+});
 </script>
+
+<style>
+/* Добавьте свои стили здесь */
+</style>

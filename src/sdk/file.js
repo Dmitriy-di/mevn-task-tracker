@@ -4,11 +4,9 @@ const getFileById = (id, preview = '') => {
   axios
     .get(`http://localhost:3000/api/v1/files/${id}/${preview}`)
     .then((response) => {
-      // Обработка успешного ответа
-      console.log(response.data) // Здесь вы можете использовать полученные файлы
+      console.log(response.data)
     })
     .catch((error) => {
-      // Обработка ошибки
       console.error(error)
     })
 }
@@ -17,20 +15,17 @@ const getFiles = () => {
   axios
     .get('http://localhost:3000/api/v1/files')
     .then((response) => {
-      // Обработка успешного ответа
-      console.log(response.data) // Здесь вы можете использовать полученные файлы
+      console.log(response.data)
     })
     .catch((error) => {
-      // Обработка ошибки
       console.error(error)
     })
 }
 
-const uploadFile = (file, idSubject) => {
-  console.log(file)
+const uploadFile = async (file, idTask) => {
   const formData = new FormData()
   formData.append('file', file)
-  axios
+  await axios
     .post('http://localhost:3000/api/v1/files', formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
@@ -56,17 +51,31 @@ const deleteFileById = (id) => {
     })
 }
 
-const getPreviewFile = (id) => {
-  axios
+const getPreviewFile = async (id) => {
+  return await axios
     .get(`http://localhost:3000/api/v1/files/${id}/preview`)
     .then((response) => {
-      // Обработка успешного ответа
-      console.log(response.data) // Здесь вы можете использовать полученные файлы
+      return response.data
     })
     .catch((error) => {
-      // Обработка ошибки
       console.error(error)
     })
 }
 
-export { getFiles, getFileById, uploadFile, deleteFileById, getPreviewFile }
+const bytesToSize = function (bytes) {
+  const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB']
+  if (!bytes) {
+    return '0 Byte'
+  }
+  const i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)))
+  return Math.round(bytes / Math.pow(1024, i)) + ' ' + sizes[i]
+}
+
+export {
+  getFiles,
+  getFileById,
+  uploadFile,
+  deleteFileById,
+  getPreviewFile,
+  bytesToSize,
+}
