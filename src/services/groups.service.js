@@ -1,7 +1,8 @@
 import { request } from './generic.service'
 
-const getGroup = (id) => request({ url: `groups/${id}`, method: 'get' })
+const getGroup = async (id) =>
+  await request({ url: `groups/${id}`, method: 'get' })
 
-const getGroups = () => request({ url: `groups`, method: 'get' })
+const getGroups = async () => await request({ url: `groups`, method: 'get' })
 
 export { getGroup, getGroups }

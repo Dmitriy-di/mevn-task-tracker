@@ -5,12 +5,12 @@ const getFile = (id) => request({ url: `files/${id}`, method: 'get' })
 
 const getFiles = () => request({ url: `files`, method: 'get' })
 
-const uploadFile = (file, taskId) => {
+const uploadFile = async (file, taskId) => {
   console.log(file)
   const formData = new FormData()
   formData.append('file', file)
 
-  axios
+  await axios
     .post('http://localhost:3000/api/v1/files', formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
@@ -25,7 +25,8 @@ const uploadFile = (file, taskId) => {
     })
 }
 
-const deleteFile = (id) => request({ url: `files/${id}`, method: 'delete' })
+const deleteFile = async (id) =>
+  await request({ url: `files/${id}`, method: 'delete' })
 
 const bytesToSize = function (bytes) {
   const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB']
