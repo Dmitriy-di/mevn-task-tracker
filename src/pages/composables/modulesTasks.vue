@@ -83,9 +83,9 @@
       <FormUpdateTask :task="currentTaskClickUp" :id="id" />
     </q-dialog>
 
-    <!-- <q-dialog v-model="showForm_filesForm">
+    <q-dialog v-model="showForm_filesForm">
       <FormFiles />
-    </q-dialog> -->
+    </q-dialog>
   </div>
 </template>
 
@@ -96,12 +96,13 @@ import FormAddTask from "components/FormAddTask.vue";
 import { deleteTask } from "../../services/index";
 import { useQuasar } from "quasar";
 import FormUpdateTask from "../../components/FormUpdateTask.vue";
+import FormFiles from "../../components/Files.vue";
 
 export default {
   components: {
     FormAddTask,
     FormUpdateTask,
-    //  FormFiles,
+    FormFiles,
   },
 
   setup() {
