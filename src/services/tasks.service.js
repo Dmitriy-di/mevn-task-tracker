@@ -8,8 +8,8 @@ const createTask = (data) => request({ url: `tasks`, data, method: 'post' })
 
 const deleteTask = (id) => request({ url: `tasks/${id}`, method: 'delete' })
 
-const updateTask = (id, data) => {
-  request({ url: `tasks/${id}`, method: 'put', data })
+const updateTask = async (id, data) => {
+  await request({ url: `tasks/${id}`, method: 'put', data })
 }
 
 export { getTask, getTasks, createTask, deleteTask, updateTask }

@@ -51,7 +51,7 @@
             </q-td>
 
             <q-td>
-              <button class="q-mr-sm btn" @click.self="updateTask(props.row)">
+              <button class="q-mr-sm btn" @click.self="updTask(props.row)">
                 Выполнена
               </button>
             </q-td>
@@ -67,6 +67,7 @@
 import { useStore } from "vuex";
 import { defineComponent, ref, computed, watch, reactive } from "vue";
 // import { updateUser } from "../api/main/mutations";
+import { updateTask } from "../services/index";
 
 export default defineComponent({
   setup() {
@@ -116,9 +117,18 @@ export default defineComponent({
     //    mutate();
     //  };
 
+    const updTask = async (e) => {
+      await updateTask(e._id, {
+        status: "accomplished",
+      });
+      store.dispatch("fetchModules");
+      store.dispatch("fetchTasks");
+    };
+
     return {
       allTasks,
       // updateTask,
+      updTask,
       currentTaskClickUp,
       columns,
       pagination,

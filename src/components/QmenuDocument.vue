@@ -65,7 +65,7 @@
 import { ref, computed } from "vue";
 import { filesApi } from "src/sdk/files/file";
 import DeleteDialogDocument from "./DeleteDialogDocument.vue";
-import RenameItemDocument from "./ClubRenameItemDocument.vue";
+import RenameItemDocument from "./RenameItemDocument.vue";
 import { useRouter } from "vue-router";
 import { useFileStore } from "src/stores/file";
 
