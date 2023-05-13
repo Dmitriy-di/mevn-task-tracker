@@ -38,10 +38,22 @@ const uploadFile = (file) => {
     })
 }
 
+const deleteFileById = (id) => {
+  axios
+    .delete(`http://localhost:3000/api/v1/files/${id}`)
+    .then((response) => {
+      console.log(response.data)
+    })
+    .catch((error) => {
+      console.log(error)
+    })
+}
+
 const filesApi = {
   getFiles,
   getFileById,
   uploadFile,
+  deleteFileById,
 }
 
 export { filesApi }
