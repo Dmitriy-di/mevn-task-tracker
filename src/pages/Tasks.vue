@@ -95,28 +95,6 @@ export default defineComponent({
 
     const allTasks = computed(() => store.getters.TASKS);
 
-    //  const updateTask = function (task) {
-    //    const apolloClient = new ApolloClient(getClientOptions());
-    //    provideApolloClient(apolloClient);
-    //    const { mutate } = useMutation(updateUser, () => ({
-    //      variables: {
-    //        input: {
-    //          name: task.name,
-    //          property4: task.property4,
-    //          property5: "967659251654331262",
-    //          property6: {
-    //            "2598174384277431501": task.property6.id,
-    //          },
-    //          property8: {
-    //            "2673961667589284866": task.property8.id,
-    //          },
-    //        },
-    //        id: task.id,
-    //      },
-    //    }));
-    //    mutate();
-    //  };
-
     const updTask = async (e) => {
       await updateTask(e._id, {
         status: "accomplished",
@@ -127,7 +105,6 @@ export default defineComponent({
 
     return {
       allTasks,
-      // updateTask,
       updTask,
       currentTaskClickUp,
       columns,
