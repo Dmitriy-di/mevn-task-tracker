@@ -54,20 +54,14 @@ export default defineComponent({
 
       console.log(file);
 
-      const author = {
-        name: "John Doe",
-        email: "johndoe@example.com",
-        // Другие поля пользователя
-      };
-
       const formData = new FormData();
       formData.append("file", file);
-      formData.append("author", JSON.stringify(author));
 
       axios
         .post("http://localhost:3000/api/v1/files", formData, {
           headers: {
             "Content-Type": "multipart/form-data",
+            userId: "6454a20a13681c3e308f8e71",
           },
         })
         .then((response) => {

@@ -103,7 +103,6 @@ export default {
         .post("http://localhost:3000/api/v1/files", formData, {
           headers: {
             "Content-Type": "multipart/form-data",
-            userId: "CAAAAAAAAAAAAAL",
           },
         })
         .then((response) => {

@@ -24,12 +24,17 @@ const getFiles = () => {
     })
 }
 
-const uploadFile = (file) => {
+const uploadFile = (file, idSubject) => {
   console.log(file)
   const formData = new FormData()
   formData.append('file', file)
   axios
-    .post('http://localhost:3000/api/v1/files', formData)
+    .post('http://localhost:3000/api/v1/files', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        userId: idSubject,
+      },
+    })
     .then((response) => {
       console.log('File uploaded successfully')
     })
