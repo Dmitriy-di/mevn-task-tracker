@@ -1,19 +1,22 @@
 const routes = [
-  // {
-  //   path: '/',
-  //   component: () => import('layouts/AuthorizationLayout.vue'),
-  //   children: [
-  //     {
-  //       path: '',
-  //       component: () => import('pages/Authorization/EnterPage.vue'),
-  //     },
-  //   ],
-  // },
   {
     path: '/',
+    component: () => import('layouts/AuthorizationLayout.vue'),
+    children: [
+      {
+        path: 'Enter',
+        component: () => import('components/EnterPage.vue'),
+      },
+      {
+        path: '',
+        component: () => import('components/RegisterPage.vue'),
+      },
+    ],
+  },
+  {
+    path: '/app',
     component: () => import('layouts/MainLayout.vue'),
     children: [
-      // { path: '', component: () => import('pages/IndexPage.vue') },
       { path: '/Team', component: () => import('pages/Team.vue') },
       {
         path: '/Executors',
