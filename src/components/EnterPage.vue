@@ -45,6 +45,7 @@
 import { defineComponent, ref } from "vue";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
+import { enter } from "../services/enter";
 
 export default defineComponent({
   setup() {
@@ -53,6 +54,46 @@ export default defineComponent({
     const password = ref("");
     const error = ref("");
     const store = useStore();
+
+    const EnterReset = () => {
+      email.value = "";
+      password.value = "";
+    };
+
+    const EnterSubmit = async () => {
+      console.log("email", email.value);
+      console.log("password", password.value);
+
+      let resAuth = null;
+
+      enter({
+        email: email.value,
+        password: password.value,
+      })
+        .then((res) => {
+          resAuth = res;
+
+          localStorage.setItem("token", resAuth.accessToken);
+
+          console.log("resAuth", resAuth);
+
+          EnterReset();
+        })
+        .catch((err) => {
+          console.log("Ошибка: ", err);
+          error.value = "Неверный логин или пароль";
+        });
+
+      router.push("/app");
+    };
+
+    return {
+      EnterSubmit,
+      email,
+      password,
+      error,
+      EnterReset,
+    };
   },
 });
 </script>
