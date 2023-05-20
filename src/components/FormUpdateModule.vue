@@ -158,6 +158,7 @@ export default defineComponent({
     watch(model, () => {
       indexResponsible.value = options.value.indexOf(model.value);
     });
+    console.log(form.value.dateStart);
 
     const upModule = async () => {
       let data = {

@@ -6,4 +6,7 @@ const getSubject = async (id) =>
 const getSubjects = async () =>
   await request({ url: `subjects`, method: 'get' })
 
-export { getSubject, getSubjects }
+const createSubject = async (data) =>
+  await request({ url: `subjects`, method: 'post', data })
+
+export { getSubject, getSubjects, createSubject }

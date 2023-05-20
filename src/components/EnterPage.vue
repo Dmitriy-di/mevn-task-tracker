@@ -73,19 +73,18 @@ export default defineComponent({
         .then((res) => {
           resAuth = res;
 
+          console.log(111, resAuth);
+
           localStorage.setItem("token", resAuth.accessToken);
           localStorage.setItem("moderator", resAuth.moderator);
 
-          console.log("resAuth", resAuth);
-
           EnterReset();
+          router.push("/app");
         })
         .catch((err) => {
           console.log("Ошибка: ", err);
           error.value = "Неверный логин или пароль";
         });
-
-      router.push("/app");
     };
 
     return {

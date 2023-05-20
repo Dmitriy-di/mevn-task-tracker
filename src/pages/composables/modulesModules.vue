@@ -200,10 +200,13 @@ export default {
     );
 
     onMounted(() => {
-      console.log(1, localStorage.moderator);
-      if (!sessionStorage.moderator) {
+      console.log(1243, !localStorage.moderator);
+      console.log(65, localStorage.moderator);
+
+      if (localStorage.moderator != "true") {
         disableAddBtn.value = true;
         disableRedBtn.value = true;
+        console.log(312123, disableAddBtn.value);
       }
     });
 

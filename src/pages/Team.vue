@@ -4,57 +4,50 @@
     <div class="wrapper join">
       <div class="join__block">
         <q-form
-          @submit.prevent="getFormExecuterValues"
+          @submit.prevent="addNewExecuter"
           class="join__form-executer q-mr-xl"
         >
           <q-input
             name="name"
             type="text"
             placeholder="Имя"
-            v-model="input1_1"
+            v-model="formExec.name"
           />
           <q-input
             name="surname"
             type="text"
             placeholder="Фамилия"
-            v-model="input1_2"
+            v-model="formExec.surname"
           />
           <q-input
             name="eMail"
             type="text"
             class="q-mb-sm"
             placeholder="Почта"
-            v-model="input1_3"
+            v-model="formExec.eMail"
           />
-          <q-btn type="submit">Добавить в группу Исполнители</q-btn>
-        </q-form>
-      </div>
 
-      <div class="join__block">
-        <q-form
-          @submit.prevent="getFormResponsibleValues"
-          class="join__form-executer"
-        >
           <q-input
-            name="name"
-            type="text"
-            placeholder="Имя"
-            v-model="input2_1"
-          />
-          <q-input
-            name="surname"
-            type="text"
-            placeholder="Фамилия"
-            v-model="input2_2"
-          />
-          <q-input
-            name="eMail"
+            name="password"
             type="text"
             class="q-mb-sm"
-            placeholder="Почта"
-            v-model="input2_3"
+            placeholder="Пароль"
+            v-model="formExec.password"
           />
-          <q-btn type="submit">Добавить в группу Ответственные</q-btn>
+
+          <q-select
+            name="role"
+            label="Роль пользователя"
+            v-model="formExec.role"
+            :options="roleOptions"
+          />
+
+          <q-checkbox v-model="formExec.isModerator" label="Модератор" />
+          <div>
+            <q-btn :disabled="disableRedBtn" type="submit"
+              >Добавить в группу</q-btn
+            >
+          </div>
         </q-form>
       </div>
     </div>
@@ -62,30 +55,64 @@
 </template>
 
 <script>
-import { defineComponent, ref } from "vue";
-// import { inviteUser } from "src/api/main/mutations";
-// import { useQuasar } from "quasar";
-// import { response } from "../functions/functions";
+import { defineComponent, ref, onMounted } from "vue";
+
+import { createSubject } from "../services/subjects.service";
 
 export default defineComponent({
   components: {},
   setup() {
-    const input1_1 = ref("");
-    const input1_2 = ref("");
-    const input1_3 = ref("");
-    const input2_1 = ref("");
-    const input2_2 = ref("");
-    const input2_3 = ref("");
+    const roleOptions = ref([
+      { label: "Ответственный", value: "ответственный" },
+      { label: "Исполнитель", value: "исполнитель" },
+    ]);
+
+    const disableRedBtn = ref(false);
+
+    const formExec = ref({
+      name: "",
+      surname: "",
+      eMail: "",
+      role: "",
+      isModerator: false,
+      password: "",
+    });
+
+    const addNewExecuter = () => {
+      console.log("formExec", formExec.value);
+      let role = "";
+
+      console.log(1, formExec.value.role.value);
+      if (formExec.value.role.value == "ответственный") {
+        role = "6454a1cf13681c3e308f8e70";
+      } else {
+        role = "6454a1b713681c3e308f8e6f";
+      }
+      console.log(1, role);
+
+      createSubject({
+        fullname: {
+          first_name: formExec.value.name,
+          last_name: formExec.value.surname,
+        },
+        email: formExec.value.eMail,
+        group: role,
+        password: formExec.value.password,
+        moderator: formExec.value.isModerator,
+      });
+    };
+
+    onMounted(() => {
+      if (localStorage.moderator != "true") {
+        disableRedBtn.value = true;
+      }
+    });
 
     return {
-      input1_1,
-      input1_2,
-      input1_3,
-      input2_1,
-      input2_2,
-      input2_3,
-      // getFormExecuterValues,
-      // getFormResponsibleValues,
+      addNewExecuter,
+      disableRedBtn,
+      roleOptions,
+      formExec,
     };
   },
 });
