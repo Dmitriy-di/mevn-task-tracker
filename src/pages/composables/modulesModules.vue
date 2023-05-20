@@ -199,6 +199,14 @@ export default {
       () => get_module(module_index)
     );
 
+    onMounted(() => {
+      console.log(1, localStorage.moderator);
+      if (!sessionStorage.moderator) {
+        disableAddBtn.value = true;
+        disableRedBtn.value = true;
+      }
+    });
+
     return {
       current_module,
       propertyStatus,

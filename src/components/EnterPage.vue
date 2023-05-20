@@ -74,6 +74,7 @@ export default defineComponent({
           resAuth = res;
 
           localStorage.setItem("token", resAuth.accessToken);
+          localStorage.setItem("moderator", resAuth.moderator);
 
           console.log("resAuth", resAuth);
 
