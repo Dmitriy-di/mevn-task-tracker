@@ -18,9 +18,7 @@
           <q-td>{{ props.row.email }}</q-td>
           <q-td>{{ props.row.first_name }}</q-td>
           <q-td>{{ props.row.last_name }}</q-td>
-          <button class="btn" @click="deleteSubject(props.row.id)">
-            Удалить
-          </button>
+          <button class="btn" @click="deleteSub(props.row.id)">Удалить</button>
         </q-tr>
       </template>
     </q-table>
@@ -30,6 +28,7 @@
 <script>
 import { defineComponent, computed, reactive } from "vue";
 import { useStore } from "vuex";
+import { deleteSubject } from "../services/index";
 
 export default defineComponent({
   setup() {
@@ -50,7 +49,13 @@ export default defineComponent({
 
     const executors = computed(() => store.getters.EXECUTORS);
 
+    const deleteSub = (id) => {
+      deleteSubject(id);
+      store.dispatch("fetchGroupRExecutors");
+    };
+
     return {
+      deleteSub,
       executors,
       columns,
       pagination,

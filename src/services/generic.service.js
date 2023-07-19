@@ -25,8 +25,6 @@ export const request = async ({ url, method, data = {} }) => {
     console.error('Ошибка запроса:', error)
     throw error
   }
-
-  return response.data
 }
 
 const API_URL_AUTH = 'http://localhost:3000/auth'

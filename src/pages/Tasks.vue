@@ -37,16 +37,16 @@
                     return "Назначена";
                   } else if (props.row.status == "accomplished")
                     return "Выполнена";
-                  else if (props.row.status == "Completed") return "Завершена";
+                  else if (props.row.status == "completed") return "Завершена";
                 })()
               }}
             </q-td>
 
             <q-td>
               {{
-                props.row.executor?.fullname.first_name +
+                props.row?.subject.first_name +
                 " " +
-                props.row.executor?.fullname.last_name
+                props.row?.subject.last_name
               }}
             </q-td>
 

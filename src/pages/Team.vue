@@ -24,7 +24,7 @@
             type="text"
             class="q-mb-sm"
             placeholder="Почта"
-            v-model="formExec.eMail"
+            v-model="formExec.email"
           />
 
           <q-input
@@ -57,7 +57,8 @@
 <script>
 import { defineComponent, ref, onMounted } from "vue";
 
-import { createSubject } from "../services/subjects.service";
+import { register } from "../services/subjects.service";
+import { useStore } from "vuex";
 
 export default defineComponent({
   components: {},
@@ -66,40 +67,45 @@ export default defineComponent({
       { label: "Ответственный", value: "ответственный" },
       { label: "Исполнитель", value: "исполнитель" },
     ]);
+    const store = useStore();
 
     const disableRedBtn = ref(false);
 
     const formExec = ref({
-      name: "",
-      surname: "",
-      eMail: "",
-      role: "",
+      first_name: "",
+      last_name: "",
+      email: "",
+      group: "",
       isModerator: false,
       password: "",
     });
 
     const addNewExecuter = () => {
       console.log("formExec", formExec.value);
-      let role = "";
+      let group = "";
 
       console.log(1, formExec.value.role.value);
       if (formExec.value.role.value == "ответственный") {
-        role = "6454a1cf13681c3e308f8e70";
+        group = 1;
       } else {
-        role = "6454a1b713681c3e308f8e6f";
+        group = 2;
       }
-      console.log(1, role);
+      console.log("email", formExec.value.email);
 
-      createSubject({
-        fullname: {
-          first_name: formExec.value.name,
-          last_name: formExec.value.surname,
-        },
-        email: formExec.value.eMail,
-        group: role,
+      register({
+        first_name: formExec.value.name,
+        last_name: formExec.value.surname,
+        email: formExec.value.email,
+        middle_name: "",
+        group: group,
         password: formExec.value.password,
-        moderator: formExec.value.isModerator,
+        isModerator: formExec.value.isModerator,
       });
+
+      store.dispatch("fetchGroupRExecutors");
+      store.dispatch("fetchGroupRExcluded");
+      store.dispatch("fetchGroupResponsibles");
+      store.dispatch("fetchSubjects");
     };
 
     onMounted(() => {
