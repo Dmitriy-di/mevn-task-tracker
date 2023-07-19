@@ -167,7 +167,7 @@ export default defineComponent({
         description: form.value.description,
         dateTimeStart: form.value.dateStart,
         dateTimeEnd: form.value.dateEnd,
-        responsible: RESPONSIBLES.value[indexResponsible.value]._id,
+        subject: RESPONSIBLES.value[indexResponsible.value].id,
       });
       store.dispatch("fetchModules");
     };

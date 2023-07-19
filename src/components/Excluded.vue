@@ -16,8 +16,8 @@
       <template v-slot:body="props">
         <q-tr :props="props">
           <q-td>{{ props.row.email }}</q-td>
-          <q-td>{{ props.row.fullname.first_name }}</q-td>
-          <q-td>{{ props.row.fullname.last_name }}</q-td>
+          <q-td>{{ props.row.first_name }}</q-td>
+          <q-td>{{ props.row.last_name }}</q-td>
           <button class="btn" @click="deleteSubject(props.row.id)">
             Удалить
           </button>

@@ -42,9 +42,7 @@
 
           <q-td>
             {{
-              props.row.executor?.fullname?.first_name +
-              " " +
-              props.row.executor?.fullname?.last_name
+              props.row.subject?.first_name + " " + props.row.subject?.last_name
             }}
           </q-td>
 
@@ -71,7 +69,7 @@
     <div v-if="MODULES[module_index].tasks.length == 0">Список задач пуст</div>
 
     <q-dialog v-model="showForm_addTask">
-      <FormAddTask :idModule="MODULES[module_index]._id" />
+      <FormAddTask :idModule="MODULES[module_index].id" />
     </q-dialog>
 
     <q-dialog v-model="showForm_updateTask">

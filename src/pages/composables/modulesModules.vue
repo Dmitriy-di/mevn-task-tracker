@@ -23,9 +23,7 @@
           <q-td>{{ props.row.name }}</q-td>
           <q-td>
             {{
-              props.row.responsible?.fullname.first_name +
-              " " +
-              props.row.responsible?.fullname.last_name
+              props.row.subject?.first_name + " " + props.row.subject?.last_name
             }}
           </q-td>
           <q-td>{{ props.row.dateTimeEnd }}</q-td>
@@ -69,7 +67,7 @@
             <q-btn
               :disabled="disableRedBtn"
               class="btn"
-              @click="delModule(props.row._id)"
+              @click="delModule(props.row.id)"
               >Удалить</q-btn
             >
           </q-td>
@@ -226,7 +224,7 @@ export default {
       columns,
       pagination,
       set_id(mod) {
-        id.value = mod._id;
+        id.value = mod.id;
         currentModuleClickUp.value = mod;
         showForm_updateModule.value = !showForm_updateModule.value;
       },

@@ -96,7 +96,7 @@ export default defineComponent({
     const allTasks = computed(() => store.getters.TASKS);
 
     const updTask = async (e) => {
-      await updateTask(e._id, {
+      await updateTask(e.id, {
         status: "accomplished",
       });
       store.dispatch("fetchModules");

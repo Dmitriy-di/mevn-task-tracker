@@ -130,7 +130,7 @@ import { updateModule } from "../services/index";
 
 export default defineComponent({
   props: {
-    idUpdateModule: String,
+    idUpdateModule: Number,
     mod: Object,
   },
 
@@ -147,9 +147,7 @@ export default defineComponent({
     });
 
     model.value =
-      props.mod.responsible?.fullname.first_name +
-      " " +
-      props.mod.responsible?.fullname.last_name;
+      props.mod.subject.first_name + " " + props.mod.subject.last_name;
 
     const options = computed(() => store.getters.OPTIONS_RESPONSIBLES);
     indexResponsible.value = options.value.indexOf(model.value);
@@ -165,9 +163,10 @@ export default defineComponent({
         name: form.value.name,
         dateTimeStart: form.value.dateStart,
         dateTimeEnd: form.value.dateEnd,
-        responsible: responsible.value[indexResponsible.value]._id,
+        subject: responsible.value[indexResponsible.value].id,
       };
 
+      console.log(props, data);
       await updateModule(props.idUpdateModule, data);
       store.dispatch("fetchModules");
       store.dispatch("fetchTasks");

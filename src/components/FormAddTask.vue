@@ -61,7 +61,7 @@ import { createTask } from "../services/index";
 
 export default defineComponent({
   props: {
-    idModule: String,
+    idModule: Number,
   },
 
   setup(props) {
@@ -85,11 +85,20 @@ export default defineComponent({
     });
 
     const createNewTask = async () => {
+      console.log(props);
+      console.log({
+        name: form.value.name,
+        description: form.value.description,
+        status: form.value.statusId,
+        subject: executors.value[indexExecutor.value].id,
+        modulee: props.id,
+      });
+
       await createTask({
         name: form.value.name,
         description: form.value.description,
         status: form.value.statusId,
-        executor: executors.value[indexExecutor.value]._id,
+        subject: executors.value[indexExecutor.value]._id,
         modulee: props.idModule,
       });
       store.dispatch("fetchModules");

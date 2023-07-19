@@ -2,22 +2,6 @@
   <div class="modules q-pa-md">
     <modulesModules v-if="showTableModules()" />
     <modulesTasks v-else />
-
-    <q-uploader :auto-upload="false" :multiple="false" @added="onFileAdded">
-      <div class="row items-center">
-        <q-icon name="cloud_upload" size="2em" />
-        <span class="text-h6">Upload file</span>
-      </div>
-    </q-uploader>
-    <q-btn label="Upload" @click="uploadFile()" />
-    <input type="file" @change="uploadFile" />
-    <q-btn label="Получить" @click="getFile()" />
-    <q-btn label="Получить по айди превью" @click="getFileById()" />
-    <q-btn
-      label="Удалить файл"
-      @click="deleteFileById('645eab1d843dbe3da54e6a0a')"
-    />
-    <Draggable v-model="treeData" />
   </div>
 </template>
 

@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const API_URL = 'http://localhost:3000/api/v1'
+const API_URL = 'http://localhost:3000'
 
 export const request = async ({ url, method, data = {} }) => {
   const token = localStorage.getItem('token')
@@ -16,11 +16,6 @@ export const request = async ({ url, method, data = {} }) => {
     headers,
     data,
   }
-  // const response = await axios[method](`${API_URL}/${url}`, data, {
-  //   headers: {
-  //     Authorization: `Bearer ${token}`,
-  //   },
-  // })
 
   try {
     const response = await axios(options)
@@ -34,7 +29,7 @@ export const request = async ({ url, method, data = {} }) => {
   return response.data
 }
 
-const API_URL_AUTH = 'http://localhost:3000/api/v1/auth'
+const API_URL_AUTH = 'http://localhost:3000/auth'
 
 export const requestAuth = async ({ url, method, data = {} }) => {
   const response = await axios[method](`${API_URL_AUTH}/${url}`, data)

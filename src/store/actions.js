@@ -75,14 +75,12 @@ export const fetchGroups = async function ({ commit }) {
 
 export const fetchGroupResponsibles = async function ({ commit }) {
   try {
-    let responsibles = await getGroup('6454a1b713681c3e308f8e6f')
+    let responsibles = await getGroup('1')
     responsibles = responsibles.subjects
 
     let options = []
     for (let subject of responsibles) {
-      options.push(
-        subject.fullname?.first_name + ' ' + subject.fullname?.last_name,
-      )
+      options.push(subject?.first_name + ' ' + subject?.last_name)
     }
 
     console.log('responsibles', responsibles)
@@ -95,14 +93,12 @@ export const fetchGroupResponsibles = async function ({ commit }) {
 
 export const fetchGroupRExecutors = async function ({ commit }) {
   try {
-    let executors = await getGroup('6454a1cf13681c3e308f8e70')
+    let executors = await getGroup('2')
     executors = executors.subjects
 
     let options = []
     for (let subject of executors) {
-      options.push(
-        subject.fullname?.first_name + ' ' + subject.fullname?.last_name,
-      )
+      options.push(subject?.first_name + ' ' + subject?.last_name)
     }
 
     console.log('executors', executors)
@@ -115,14 +111,12 @@ export const fetchGroupRExecutors = async function ({ commit }) {
 
 export const fetchGroupRExcluded = async function ({ commit }) {
   try {
-    let excluded = await getGroup('6454b387b526ef56cc250483')
+    let excluded = await getGroup('3')
     excluded = excluded.subjects
 
     let options = []
     for (let subject of excluded) {
-      options.push(
-        subject.fullname?.first_name + ' ' + subject.fullname?.last_name,
-      )
+      options.push(subject?.first_name + ' ' + subject?.last_name)
     }
 
     console.log('excLUded', excluded)

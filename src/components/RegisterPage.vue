@@ -8,6 +8,7 @@
           v-model="name"
           label="Введите ваше имя"
           type="text"
+          readonly
           lazy-rules
           :rules="[(val) => (val && val.length > 0) || 'Введите что нибудь']"
         >
@@ -18,10 +19,12 @@
           label="Введите вашу фамилию"
           type="text"
           lazy-rules
+          readonly
           :rules="[(val) => (val && val.length > 0) || 'Введите что нибудь']"
         >
         </q-input>
         <q-input
+          readonly
           rounded
           v-model="email"
           label="Введите вашу почту"
@@ -74,20 +77,12 @@
               >
               </q-input>
             </q-card-section>
-            <q-card-actions align="right" class="text-primary">
-              <q-btn flat label="Отменить" v-close-popup />
-              <q-btn
-                flat
-                label="Отправить"
-                v-close-popup
-                @click="SetPassword"
-              />
-            </q-card-actions>
           </q-card>
         </q-dialog>
         <div class="q-mt-md">
-          <q-btn label="Отправить" type="submit" color="primary" />
+          <q-btn disabled label="Отправить" type="submit" color="primary" />
           <q-btn
+            disabled
             label="Сбросить"
             type="reset"
             color="primary"
