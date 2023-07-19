@@ -105,9 +105,7 @@ export default defineComponent({
     }
 
     model.value =
-      props.task.executor?.fullname.first_name +
-      " " +
-      props.task.executor?.fullname.last_name;
+      props.task?.subject.first_name + " " + props.task?.subject.last_name;
 
     indexExecutor.value = options.value.indexOf(model.value);
 
@@ -127,11 +125,11 @@ export default defineComponent({
 
     //   modulee: MODULES.value[module_index.value]._id,
     const updTask = async (e) => {
-      await updateTask(props.task._id, {
+      await updateTask(props.task.id, {
         name: e.target.elements.name.value,
         description: e.target.elements.description.value,
         status: statusId.value,
-        executor: EXECUTORS.value[indexExecutor.value]._id,
+        subject: EXECUTORS.value[indexExecutor.value].id,
       });
       store.dispatch("fetchModules");
       store.dispatch("fetchTasks");

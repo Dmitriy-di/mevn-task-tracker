@@ -12,7 +12,7 @@ const deleteTask = async (id) =>
   await request({ url: `task/${id}`, method: 'delete' })
 
 const updateTask = async (id, data) => {
-  await request({ url: `task/${id}`, method: 'put', data })
+  await request({ url: `task/${id}`, method: 'patch', data })
 }
 
 export { getTask, getTasks, createTask, deleteTask, updateTask }

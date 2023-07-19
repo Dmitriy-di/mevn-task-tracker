@@ -35,7 +35,7 @@
                   return "Назначена";
                 } else if (props.row.status == "accomplished")
                   return "Выполнена";
-                else if (props.row.status == "Completed") return "Завершена";
+                else if (props.row.status == "completed") return "Завершена";
               })()
             }}
           </q-td>
@@ -54,7 +54,7 @@
             >
               Редактировать
             </button>
-            <button class="btn" @click="delTask(props.row._id)">Удалить</button>
+            <button class="btn" @click="delTask(props.row.id)">Удалить</button>
             <button class="btn" @click.self="set_id2(props.row)">Файлы</button>
           </q-td>
         </q-tr>

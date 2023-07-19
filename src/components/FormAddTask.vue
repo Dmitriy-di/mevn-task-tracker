@@ -63,7 +63,6 @@ export default defineComponent({
   props: {
     idModule: Number,
   },
-
   setup(props) {
     const $q = useQuasar();
     const store = useStore();
@@ -85,20 +84,11 @@ export default defineComponent({
     });
 
     const createNewTask = async () => {
-      console.log(props);
-      console.log({
-        name: form.value.name,
-        description: form.value.description,
-        status: form.value.statusId,
-        subject: executors.value[indexExecutor.value].id,
-        modulee: props.id,
-      });
-
       await createTask({
         name: form.value.name,
         description: form.value.description,
         status: form.value.statusId,
-        subject: executors.value[indexExecutor.value]._id,
+        subject: executors.value[indexExecutor.value].id,
         modulee: props.idModule,
       });
       store.dispatch("fetchModules");
@@ -115,7 +105,7 @@ export default defineComponent({
       } else if (status.value == "Выполнена") {
         form.value.statusId = "accomplished";
       } else {
-        form.value.statusId = "Completed";
+        form.value.statusId = "completed";
       }
     });
 
