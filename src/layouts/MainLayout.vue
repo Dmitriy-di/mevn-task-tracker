@@ -19,6 +19,7 @@
       <q-list>
         <q-list bordered class="rounded-borders">
           <q-expansion-item
+            v-if="!disableRedBtn"
             to="/Team"
             expand-separator
             icon=""
@@ -40,6 +41,7 @@
           </q-expansion-item>
 
           <q-expansion-item
+            v-if="MODULES.length != 0"
             to="/Modules"
             expand-separator
             icon=""
@@ -62,6 +64,7 @@
           </q-expansion-item>
 
           <q-expansion-item
+            v-if="allTasks.length != 0"
             to="/AllTasks"
             expand-separator
             icon=""
@@ -88,19 +91,17 @@
 <script>
 import { defineComponent, ref, computed, onMounted, watch } from "vue";
 import { useStore } from "vuex";
-// import QtabsDocument from "../components/QtabsDocument.vue";
+
+//TODO добавить логику доступов: на бэке реализовать получение пользователем только того, к чему у него есть доступ. Также на бэке защитить все запросы регистрацией
 
 export default defineComponent({
   name: "MainLayout",
 
-  components: {
-    // QtabsDocument,
-  },
-
   setup() {
     const leftDrawerOpen = ref(false);
     const store = useStore();
-
+    const disableRedBtn = ref(false);
+    const allTasks = computed(() => store.getters.TASKS);
     const get_module_index = function (index) {
       store.commit("setModuleIndex", index);
     };
@@ -108,6 +109,9 @@ export default defineComponent({
     const MODULES = computed(() => store.getters.MODULES);
 
     onMounted(() => {
+      if (localStorage.moderator != "true") {
+        disableRedBtn.value = true;
+      }
       store.dispatch("fetchGroupResponsibles");
       store.dispatch("fetchGroupRExecutors");
       store.dispatch("fetchTasks");
@@ -116,7 +120,9 @@ export default defineComponent({
     });
 
     return {
+      allTasks,
       leftDrawerOpen,
+      disableRedBtn,
       tab: "mail",
       get_module_index,
       toggleLeftDrawer() {

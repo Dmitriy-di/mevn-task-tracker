@@ -18,7 +18,13 @@
           <q-td>{{ props.row.email }}</q-td>
           <q-td>{{ props.row.first_name }}</q-td>
           <q-td>{{ props.row.last_name }}</q-td>
-          <button class="btn" @click="deleteSub(props.row.id)">Удалить</button>
+          <button
+            v-if="!disableRedBtn"
+            class="btn"
+            @click="deleteSub(props.row.id)"
+          >
+            Удалить
+          </button>
         </q-tr>
       </template>
     </q-table>
@@ -26,13 +32,14 @@
 </template>
 
 <script>
-import { defineComponent, computed, reactive } from "vue";
+import { defineComponent, computed, reactive, ref, onMounted } from "vue";
 import { useStore } from "vuex";
 import { deleteSubject } from "../services/index";
 
 export default defineComponent({
   setup() {
     const store = useStore();
+    const disableRedBtn = ref(false);
 
     const pagination = reactive({
       rowsPerPage: 10,
@@ -54,7 +61,14 @@ export default defineComponent({
       store.dispatch("fetchGroupRExecutors");
     };
 
+    onMounted(() => {
+      if (localStorage.moderator != "true") {
+        disableRedBtn.value = true;
+      }
+    });
+
     return {
+      disableRedBtn,
       deleteSub,
       executors,
       columns,

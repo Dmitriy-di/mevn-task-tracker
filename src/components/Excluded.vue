@@ -18,7 +18,11 @@
           <q-td>{{ props.row.email }}</q-td>
           <q-td>{{ props.row.first_name }}</q-td>
           <q-td>{{ props.row.last_name }}</q-td>
-          <button class="btn" @click="deleteSubject(props.row.id)">
+          <button
+            v-if="!disableRedBtn"
+            class="btn"
+            @click="deleteSubject(props.row.id)"
+          >
             Удалить
           </button>
         </q-tr>

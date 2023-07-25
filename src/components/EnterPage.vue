@@ -72,7 +72,7 @@ export default defineComponent({
       })
         .then((res) => {
           resAuth = res;
-
+          console.log(resAuth);
           console.log(111, resAuth);
           console.log(resAuth);
           localStorage.setItem("token", resAuth.access_token);
