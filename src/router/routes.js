@@ -29,6 +29,7 @@ const routes = [
       { path: '/Excluded', component: () => import('components/Excluded.vue') },
       { path: '/Modules', component: () => import('pages/Modules.vue') },
       { path: '/AllTasks', component: () => import('pages/Tasks.vue') },
+      { path: '/Chat', component: () => import('pages/Chat.vue') },
     ],
   },
 

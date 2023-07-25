@@ -6,8 +6,8 @@ export const request = async ({ url, method, data = {} }) => {
   const token = localStorage.getItem('token')
 
   const headers = {
-    Authorization: `Bearer ${token}`, // Добавление токена в заголовок Authorization
-    'Content-Type': 'application/json', // Пример другого заголовка, если необходимо
+    Authorization: `Bearer ${token}`,
+    'Content-Type': 'application/json',
   }
 
   const options = {

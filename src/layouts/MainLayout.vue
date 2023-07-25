@@ -20,6 +20,17 @@
         <q-list bordered class="rounded-borders">
           <q-expansion-item
             v-if="!disableRedBtn"
+            to="/Chat"
+            expand-separator
+            icon=""
+            :label="`Чат`"
+            caption=""
+            default-opened
+          >
+          </q-expansion-item>
+
+          <q-expansion-item
+            v-if="!disableRedBtn"
             to="/Team"
             expand-separator
             icon=""
@@ -41,7 +52,7 @@
           </q-expansion-item>
 
           <q-expansion-item
-            v-if="MODULES.length != 0"
+            v-if="MODULES.length != 0 && !disableRedBtn"
             to="/Modules"
             expand-separator
             icon=""
@@ -64,7 +75,7 @@
           </q-expansion-item>
 
           <q-expansion-item
-            v-if="allTasks.length != 0"
+            v-if="allTasks.length != 0 && !disableRedBtn"
             to="/AllTasks"
             expand-separator
             icon=""
