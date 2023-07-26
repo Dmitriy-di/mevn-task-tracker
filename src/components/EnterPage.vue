@@ -77,6 +77,7 @@ export default defineComponent({
           console.log(resAuth);
           localStorage.setItem("token", resAuth.access_token);
           localStorage.setItem("moderator", resAuth.isModerator);
+          localStorage.setItem("email", resAuth.email);
 
           EnterReset();
           router.push("/app");
