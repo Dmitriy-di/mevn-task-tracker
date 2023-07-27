@@ -31,7 +31,7 @@
               v-for="room in rooms"
               :key="room.id"
               align="left"
-              @click="set_room_id(room.name)"
+              @click="set_room_id(room.id)"
             >
               <q-route-tab>
                 <div>{{ room.name }}</div>

@@ -65,6 +65,6 @@ export const setRooms = (state, rooms) => {
   state.rooms = rooms
 }
 
-export const setId = (state, currentRoomId) => {
+export const setRoomId = (state, currentRoomId) => {
   state.currentRoomId = currentRoomId
 }

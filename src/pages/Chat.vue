@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h4>Пользователей онлайн: {{ usersOnline }}</h4>
+    <h4>{{ currentRoomId }}</h4>
     <div>
       <q-btn-toggle
         v-model="roomId"
@@ -26,15 +26,11 @@
           </div> -->
 
           <q-chat-message
-            v-for="(msg, index) in msgHistory"
+            v-for="(msg, index) in chatHistory"
             :key="index"
-            :name="
-              msg.Distributor
-                ? msg.Distributor?.name_organisation
-                : msg.Wirehouse_owner?.name_organisation
-            "
+            :name="msg.subject.first_name"
             :text="[msg.message]"
-            :sent="msg[userType]?.email == userEmail"
+            :sent="msg.subject.email == userEmail"
           />
         </div>
       </div>
@@ -46,25 +42,6 @@
           type="text"
           placeholder="Введите сообщение"
         />
-      </form>
-    </div>
-
-    <div>
-      <!-- <q-select
-        name="role"
-        label="Выбрать пользователя"
-        v-model="userType"
-        :options="usersOption"
-      /> -->
-
-      <form @submit.prevent="createChat" action="">
-        <input
-          class="formInput"
-          v-model="nameNewChat"
-          type="text"
-          placeholder="Новый чат"
-        />
-        <!-- <button type="submit">Создать чат</button> -->
       </form>
     </div>
   </div>
@@ -93,16 +70,27 @@ let usersOnline = ref(0);
 let chatNubmer = ref();
 const rooms = ref([]);
 const currentRoomId = computed(() => store.getters.CURRENT_ROOM_ID);
+const chatHistory = ref([]);
+const previousRoomId = ref("");
 
 watch(currentRoomId, () => {
-  socket.emit("roomId", currentRoomId.value);
+  socket.emit("roomId", currentRoomId.value, (value) => {
+    chatHistory.value = value;
+    console.log(value);
+  });
+  console.log(chatHistory.value);
 });
 
 const submit = () => {
+  console.log(previousRoomId.value);
   socket.emit("message", {
     email: localStorage.getItem("email"),
     msg: inputMsg.value,
+    roomId: currentRoomId.value,
+    previousRoomId: previousRoomId.value,
   });
+
+  previousRoomId.value = roomId.value;
 
   inputMsg.value = "";
 };
@@ -111,11 +99,14 @@ socket.on("connect", function () {
   console.log("Connected!");
 });
 
+socket.on("message", (message) => {
+  chatHistory.value.push(message);
+});
+
 onMounted(() => {
   socket.emit("connection", localStorage.getItem("email"), (data) => {
     rooms.value = data;
     store.commit("setRooms", rooms.value);
-    console.log("chats", data);
   });
 });
 </script>
