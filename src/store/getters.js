@@ -55,3 +55,8 @@ export const OPTIONS_EXCLUDED = (state) => {
 export const MODULE_INDEX = (state) => {
   return state.module_index
 }
+
+// CHAT
+export const ROOMS = (state) => {
+  return state.rooms
+}

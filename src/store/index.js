@@ -15,6 +15,7 @@ export const state = {
   optionsResponsibles: [],
   optionsExecutors: [],
   optionsExcluded: [],
+  rooms: [],
   module_index: -1,
 }
 

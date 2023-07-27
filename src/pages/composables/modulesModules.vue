@@ -49,7 +49,7 @@
           <q-td>
             {{
               props.row.tasks.reduce(function (a, b) {
-                if (b.status == "Completed") {
+                if (b.status == "completed") {
                   return ++a;
                 } else return a;
               }, 0)

@@ -19,7 +19,6 @@
       <q-list>
         <q-list bordered class="rounded-borders">
           <q-expansion-item
-            v-if="!disableRedBtn"
             to="/Chat"
             expand-separator
             icon=""
@@ -27,6 +26,17 @@
             caption=""
             default-opened
           >
+            <q-tabs
+              indicator-color="transparent"
+              v-for="(room, index) in rooms"
+              :key="room.id"
+              align="left"
+              @click="get_room_index(room.name)"
+            >
+              <q-route-tab>
+                <div>{{ room.name }}</div>
+              </q-route-tab>
+            </q-tabs>
           </q-expansion-item>
 
           <q-expansion-item
@@ -52,7 +62,7 @@
           </q-expansion-item>
 
           <q-expansion-item
-            v-if="MODULES.length != 0 && !disableRedBtn"
+            v-if="(MODULES.length != 0) | !disableRedBtn"
             to="/Modules"
             expand-separator
             icon=""
@@ -113,8 +123,14 @@ export default defineComponent({
     const store = useStore();
     const disableRedBtn = ref(false);
     const allTasks = computed(() => store.getters.TASKS);
+    const rooms = computed(() => store.getters.ROOMS);
+    console.log(1111, rooms.value);
     const get_module_index = function (index) {
       store.commit("setModuleIndex", index);
+    };
+
+    const get_room_index = (index) => {
+      console.log("index: ", index);
     };
 
     const MODULES = computed(() => store.getters.MODULES);
@@ -131,7 +147,9 @@ export default defineComponent({
     });
 
     return {
+      get_room_index,
       allTasks,
+      rooms,
       leftDrawerOpen,
       disableRedBtn,
       tab: "mail",

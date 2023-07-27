@@ -59,3 +59,8 @@ export const setSubjects = (state, subjects) => {
 export const setModuleIndex = (state, index) => {
   state.module_index = index
 }
+
+// CHAT
+export const setRooms = (state, rooms) => {
+  state.rooms = rooms
+}

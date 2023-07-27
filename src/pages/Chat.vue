@@ -72,11 +72,14 @@
 
 <script setup>
 import { onMounted, ref, watch } from "vue";
+import { useStore } from "vuex";
 // import { getUsers } from "../services/index";
 // import { getRoom, getRooms } from "../services/index";
 
 const { io } = require("socket.io-client");
 const socket = io("http://localhost:3000");
+
+const store = useStore();
 
 const roomId = ref(1);
 const inputMsg = ref();
@@ -88,16 +91,13 @@ const nameNewChat = ref();
 const userEmail = ref(localStorage.getItem("email"));
 let usersOnline = ref(0);
 let chatNubmer = ref();
+const rooms = ref([]);
 
 const submit = () => {
-  socket.emit(
-    "message",
-    {
-      email: localStorage.getItem("email"),
-      msg: inputMsg.value,
-    },
-    (data) => console.log(data)
-  );
+  socket.emit("message", {
+    email: localStorage.getItem("email"),
+    msg: inputMsg.value,
+  });
 
   inputMsg.value = "";
 };
@@ -122,7 +122,11 @@ socket.on("connect", function () {
 // });
 
 onMounted(() => {
-  socket.emit("connection", localStorage.getItem("email"));
+  socket.emit("connection", localStorage.getItem("email"), (data) => {
+    rooms.value = data;
+    store.commit("setRooms", rooms.value);
+    console.log("chats", data);
+  });
 });
 </script>
 

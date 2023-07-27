@@ -18,7 +18,7 @@ export const fetchProducts = async function ({ commit }) {
   try {
     const product = await getProducts()
     commit('setProducts', product)
-  } catch (err) {
+  } catch (err) { 
     console.log('Ошибка', err)
   }
 }
