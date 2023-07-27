@@ -16,6 +16,7 @@ export const state = {
   optionsExecutors: [],
   optionsExcluded: [],
   rooms: [],
+  currentRoomId: '',
   module_index: -1,
 }
 

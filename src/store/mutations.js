@@ -64,3 +64,7 @@ export const setModuleIndex = (state, index) => {
 export const setRooms = (state, rooms) => {
   state.rooms = rooms
 }
+
+export const setId = (state, currentRoomId) => {
+  state.currentRoomId = currentRoomId
+}

@@ -60,3 +60,7 @@ export const MODULE_INDEX = (state) => {
 export const ROOMS = (state) => {
   return state.rooms
 }
+
+export const CURRENT_ROOM_ID = (state) => {
+  return state.currentRoomId
+}

@@ -71,7 +71,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref, watch } from "vue";
+import { onMounted, ref, watch, computed } from "vue";
 import { useStore } from "vuex";
 // import { getUsers } from "../services/index";
 // import { getRoom, getRooms } from "../services/index";
@@ -92,6 +92,11 @@ const userEmail = ref(localStorage.getItem("email"));
 let usersOnline = ref(0);
 let chatNubmer = ref();
 const rooms = ref([]);
+const currentRoomId = computed(() => store.getters.CURRENT_ROOM_ID);
+
+watch(currentRoomId, () => {
+  socket.emit("roomId", currentRoomId.value);
+});
 
 const submit = () => {
   socket.emit("message", {
@@ -105,21 +110,6 @@ const submit = () => {
 socket.on("connect", function () {
   console.log("Connected!");
 });
-
-// socket.on("message", (data) => {
-//   console.log(data);
-// });
-
-// watch(roomId, () => {
-//   const choicedRoom = roomsOptions.value.filter(
-//     (el) => el.value == roomId.value
-//   );
-//   socket.emit("joinRoom", {
-//     roomName: choicedRoom[0].label,
-//     roomId: choicedRoom[0].value,
-//   });
-//   console.log("roomName", choicedRoom[0].label);
-// });
 
 onMounted(() => {
   socket.emit("connection", localStorage.getItem("email"), (data) => {

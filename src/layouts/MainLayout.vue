@@ -28,10 +28,10 @@
           >
             <q-tabs
               indicator-color="transparent"
-              v-for="(room, index) in rooms"
+              v-for="room in rooms"
               :key="room.id"
               align="left"
-              @click="get_room_index(room.name)"
+              @click="set_room_id(room.name)"
             >
               <q-route-tab>
                 <div>{{ room.name }}</div>
@@ -124,13 +124,12 @@ export default defineComponent({
     const disableRedBtn = ref(false);
     const allTasks = computed(() => store.getters.TASKS);
     const rooms = computed(() => store.getters.ROOMS);
-    console.log(1111, rooms.value);
     const get_module_index = function (index) {
       store.commit("setModuleIndex", index);
     };
 
-    const get_room_index = (index) => {
-      console.log("index: ", index);
+    const set_room_id = (value) => {
+      store.commit("setRoomId", value);
     };
 
     const MODULES = computed(() => store.getters.MODULES);
@@ -147,7 +146,7 @@ export default defineComponent({
     });
 
     return {
-      get_room_index,
+      set_room_id,
       allTasks,
       rooms,
       leftDrawerOpen,
